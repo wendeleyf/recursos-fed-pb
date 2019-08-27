@@ -24,4 +24,4 @@
   | Código Favorecido 	| Código do favorecido do pagamento realizado.    Favorecidos: Entes governamentais, entidades sem fins   lucrativos, demais pessoas jurídicas ou pessoas físicas que receberam   transferências de recursos públicos federais, independentemente da origem   desses valores.    Fonte: Controladoria-Geral da União 	|
   | Nome Favorecido 	| Nome do favorecido do pagamento realizado 	|
   | Valor Transferido 	| Valor da Transferência 	|
-  Table:Dicionario de Dados
+
