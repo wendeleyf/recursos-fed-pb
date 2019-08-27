@@ -3,11 +3,13 @@
 ## Descrição do projeto
 
 >    Este projeto tem por objetivo apresentar informações sobre os recursos federais destinados ao estado da Paraiba, permitindo o acompanhameto do repasse feitos aos municipios de forma detalhada.
+
 ## Origem dos dados dados 
 
 
->  - [Portal da transparencia](www.portaltransparencia.gov.br/download-de-dados/transferencias)
-  
+>  - [Portal da transparencia](http://www.portaltransparencia.gov.br/download-de-dados/transferencias)
+
+### Dicionario dos dados dados 
   
   | COLUNA 	| DESCRIÇÃO 	|
   |--------------------	|-----------------------------------------------------------------------------------------------------------------------------	|
@@ -23,4 +25,4 @@
   | Código Favorecido 	| Código do favorecido do pagamento realizado.    Favorecidos: Entes governamentais, entidades sem fins   lucrativos, demais pessoas jurídicas ou pessoas físicas que receberam   transferências de recursos públicos federais, independentemente da origem   desses valores.    Fonte: Controladoria-Geral da União 	|
   | Nome Favorecido 	| Nome do favorecido do pagamento realizado 	|
   | Valor Transferido 	| Valor da Transferência 	|
-  Table:  Dicionario de Dados
+
