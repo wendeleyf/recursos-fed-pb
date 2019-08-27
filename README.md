@@ -1,20 +1,3 @@
-# recursos-fed-pb---
-title: "Recursos federais PB"
-author: ""
-date: ""
-output: html_document
----
-
-```{r setup, include=FALSE}
-knitr::opts_chunk$set(echo = TRUE)
-```
-
-## Descrição do projeto
-
->    Este projeto tem por objetivo apresentar informações sobre os recursos federais destinados ao estado da Paraiba, permitindo o acompanhameto do repasse feitos aos municipios de forma detalhada.
-
-
-
 ## Origem dos dados dados 
 
 
