@@ -4,15 +4,15 @@ library(tidyverse)
 library(data.table)
 
 # Lendo arquivo de transferências PB
-ler_rds_transferencias_pb <- function(caminho){
+ler_rds_recursos_pb <- function(caminho){
   caminho_rds <- caminho
-  transferencias_pb <- readRDS(caminho_rds)
-  return(transferencias_pb)
+  recursos_pb <- readRDS(caminho_rds)
+  return(recursos_pb)
 }
 
 # Tratanto o rds e removendo colunas desnecessárias para a aplicação
-tratar_rds_transferencias_pb <- function(transferencias_pb){
-  rds <- transferencias_pb
+tratar_rds_recursos_pb <- function(recursos_pb){
+  rds <- recursos_pb
   rds$ano_mes <- NULL
   rds$uf <- NULL
   rds$codigo_municipio_siafi <- NULL
@@ -25,10 +25,17 @@ tratar_rds_transferencias_pb <- function(transferencias_pb){
 }
 
 # Salvar o rds na pasta data
-salvar_rds_transferencias_pb_enxutas <- function(arquivo, caminho){
+salvar_rds_recursos_pb_enxuto <- function(arquivo, caminho){
   saveRDS(object = arquivo, file = caminho)
 }
 
-salvar_rds_transferencias_pb_enxutas(transferencias, 'data/transferencias_pb_enxuta.rds')
+
+# INÍCIO #
+# Tratando o dataframe de recursos
+recursos_clean <- ler_rds_recursos_pb("data/transf_pb.rds")
+recursos <- tratar_rds_recursos_pb(recursos_clean)
+salvar_rds_recursos_pb_enxuto(recursos, 'data/recursos_pb_enxuto.rds')
 
 
+caminho_rds_recursos <- "data/recursos_pb_enxuto.rds"
+recursos_pb <- readRDS(caminho_rds_transferencias)
