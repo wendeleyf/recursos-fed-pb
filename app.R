@@ -1,5 +1,4 @@
-library(shiny)
-library(shinydashboard)
+source("R/utils.R")
 
 ui <- dashboardPage(
   dashboardHeader(

@@ -1,7 +1,5 @@
 # Bibliotecas
-library(dplyr)
-library(tidyverse)
-library(data.table)
+source('R/utils.R')
 
 # Lendo arquivo de transferências PB
 ler_rds_recursos_pb <- function(caminho){
@@ -21,6 +19,7 @@ tratar_rds_recursos_pb <- function(recursos_pb){
   rds$codigo_elemento_despesa <- NULL
   rds$codigo_grupo_despesa <- NULL
   rds$codigo_modalidade_aplicacao_despesa <- NULL
+  rds <- tibble::rowid_to_column(rds, "id_recurso")
   return(rds)
 }
 
@@ -30,10 +29,20 @@ salvar_rds_recursos_pb_enxuto <- function(arquivo, caminho){
 }
 
 
+# Inserindo o dataframe de recursos no banco de dados
+inserir_recursos_no_banco_de_dados <- function(recursos){
+  dados <- recursos
+  conexao <- conectarPostgreSql()
+  dbWriteTable(conexao, "recursos_portal_transferencias", recursos, row.names = FALSE, overwrite = TRUE)
+  dbSendQuery(conexao, "ALTER TABLE recursos_portal_transferencias ADD PRIMARY KEY (id_recurso)")
+  dbDisconnect(conexao)
+}
+
 # INÍCIO #
 # Tratando o dataframe de recursos
 recursos_clean <- ler_rds_recursos_pb("data/transf_pb.rds")
 recursos <- tratar_rds_recursos_pb(recursos_clean)
+inserir_recursos_no_banco_de_dados(recursos)
 salvar_rds_recursos_pb_enxuto(recursos, 'data/recursos_pb_enxuto.rds')
 
 
