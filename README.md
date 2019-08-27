@@ -1,11 +1,3 @@
----
-title: "Recursos"
-author: ""
-date: ""
-output: html_document
----
-
-
 ## Descrição do projeto
 
 >    Este projeto tem por objetivo apresentar informações sobre os recursos federais destinados ao estado da Paraiba, permitindo o acompanhameto do repasse feitos aos municipios de forma detalhada.
