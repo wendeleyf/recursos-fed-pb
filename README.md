@@ -5,16 +5,6 @@ date: ""
 output: html_document
 ---
 
----
-title: "Recursos federais PB"
-author: ""
-date: ""
-output: html_document
----
-
-```{r setup, include=FALSE}
-knitr::opts_chunk$set(echo = TRUE)
-```
 
 ## Descrição do projeto
 
