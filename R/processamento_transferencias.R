@@ -1,14 +1,44 @@
-# Bibliotecas
-source('R/utils.R')
+## -------------------------------------------
+## Script: processamento_transferencias.R
+##
+## Descrição: Script para leitura, tratamento e inserção de dos Recursos Federais na Paraíba no banco de dados
+##
+## Autor: Wendeley Fernandes
+##
+## Data: 28/08/2019
+##
+## -------------------------------------------
+## 
+## Bibliotecas Padrões
+  source('R/utils.R')
+## -------------------------------------------
+##
+## Sumário de Funções
+##
+## ler_rds_recursos_pb
+## tratar_rds_recursos_pb
+## salvar_rds_recursos_pb_enxuto
+## inserir_recursos_no_banco_de_dados
+## 
+## -------------------------------------------
 
-# Lendo arquivo de transferências PB
+
+# -
+# Lê um arquivo RDS no computador para trabalhá-lo no R
+# @param {character} caminho - Diretório onde o arquivo está no computador
+# @return {data.frame} recursos_pb - Retorna um data.frame a partir do RDS lido.
+# - 
 ler_rds_recursos_pb <- function(caminho){
   caminho_rds <- caminho
   recursos_pb <- readRDS(caminho_rds)
   return(recursos_pb)
 }
 
-# Tratanto o rds e removendo colunas desnecessárias para a aplicação
+# -
+# Retorna o data.frame tratado, removendo colunas desnecessárias para a aplicação
+# @param {data.frame} recursos_pb - O data.frame que irá ser trabalhado, é necessário que seja o rds específico de recursos 
+# @return {data.frame} rds - O data.frame tratado e sem colunas desnecessárias
+# - 
 tratar_rds_recursos_pb <- function(recursos_pb){
   rds <- recursos_pb
   rds$ano_mes <- NULL
@@ -23,43 +53,19 @@ tratar_rds_recursos_pb <- function(recursos_pb){
   return(rds)
 }
 
-# Salvar o rds na pasta data
-salvar_rds_recursos_pb_enxuto <- function(arquivo, caminho){
-  saveRDS(object = arquivo, file = caminho)
-}
 
-
-# Inserindo o dataframe de recursos no banco de dados
+# -
+# Insere o data.frame de recursos tratado no banco de dados
+# @param {data.frame} recursos - O data.frame de recursos que irá ser inserido na base de dados
+# - 
 inserir_recursos_no_banco_de_dados <- function(recursos){
   dados <- recursos
-  conexao <- conectarPostgreSql()
+  conexao <- conectar_postgre_sql()
   dbWriteTable(conexao, "recursos_portal_transparencia", recursos, row.names = FALSE, overwrite = TRUE)
   dbSendQuery(conexao, "ALTER TABLE recursos_portal_transparencia ADD PRIMARY KEY (id_recurso)")
   dbDisconnect(conexao)
 }
 
-# Buscando o dataframe de recursos no banco de dados
-buscar_recursos_no_banco_de_dados <- function(){
-  conexao <- conectarPostgreSql()
-  recursos_tbl <- tbl(conexao, "recursos_portal_transparencia")
-  recursos <- recursos_tbl %>%
-    collect()
-  dbDisconnect(conexao)
-  recursos
-}
-
-buscar_total_recursos_por_municipio <- function(){
-  conexao <- conectarPostgreSql()
-  recursos_tbl <- tbl(conexao, "recursos_portal_transparencia")
-  total_recursos <- recursos_tbl %>%
-    group_by(nome_municipio) %>%
-    summarise(total_transferido = sum(valor_transferido, na.rm = TRUE)) %>%
-    arrange(desc(total_transferido)) %>%
-    collect()
-  dbDisconnect(conexao)
-  total_recursos$nome_municipio[total_recursos$nome_municipio == ''] <- 'GOVERNO DA PARAÍBA'
-  total_recursos
-}
 
 # INÍCIO #
 # Tratando o dataframe de recursos
@@ -70,5 +76,4 @@ salvar_rds_recursos_pb_enxuto(recursos, 'data/recursos_pb_enxuto.rds')
 recursos <- buscar_recursos_no_banco_de_dados()
 caminho_rds_recursos <- "data/recursos_pb_enxuto.rds"
 recursos_pb <- readRDS(caminho_rds_transferencias)
-
 total <- buscar_total_recursos_por_municipio()
