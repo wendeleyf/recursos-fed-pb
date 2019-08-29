@@ -26,7 +26,10 @@
 ##
 ## -------------------------------------------
 
-
+# -
+# Retorna uma conexão que será 
+# @return {data.frame} rds - O data.frame tratado e sem colunas desnecessárias
+# - 
 conectar_postgre_sql <- function(){
   conexao <- dbConnect(
     drv = Postgres(),
