@@ -16,6 +16,8 @@
    library(data.table)
    library(shiny)
    library(shinydashboard)
+   library(plotly)
+
 ## -------------------------------------------
 ##
 ## Sumário de Funções
