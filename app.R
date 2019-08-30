@@ -7,6 +7,54 @@ ui <- dashboardPage(
   ),
   
   dashboardSidebar(
+    
+    sidebarMenu(
+      menuItem(
+        text = "Inicial",
+        icon = icon("home")
+      ),
+      menuItem(
+        text = "Transferências Fiscais",
+        icon = icon("flag"),
+        menuSubItem(
+          text = "Visão Geral",
+          icon = icon("eye")
+        ),
+        menuSubItem(
+          text = "Visão Municipal",
+          icon = icon("eye")
+        ),
+        menuSubItem(
+          text = "Visão Estadual",
+          icon = icon("eye")
+        )
+      ),
+      menuItem(
+        text = "Aplicações Diretas",
+        icon = icon("flag")
+      ),
+      menuItem(
+        text = "Rastreamento",
+        icon = icon("search"),
+        menuItem(
+          text = "Municipal",
+          icon = icon("eye"),
+          menuSubItem(
+            text = "Educação",
+            icon = icon("book")
+          ),
+          menuSubItem(
+            text = "Saúde",
+            icon = icon("plus")
+          )
+        ),
+        menuItem(
+          text = "Estadual",
+          icon = icon("flag")
+        )
+      )
+    ),
+    
     width = 250
   ),
   dashboardBody()
