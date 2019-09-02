@@ -64,18 +64,18 @@ grafico_barra_funcao <- function(){
   #gerando grafico
   p_total_nome <- plot_ly(df_ano_funcao,
                           x= ~ano,
-                          y = ~total,
+                          y = ~log(total),
                           name = ~nome_funcao,
-                          color= ~log10(total),
+                          color= ~log2(total),
                           marker = list(colorscale='Viridis',
                                         reversescale = T),
-                          text = ~paste("Funçao:",nome_funcao,
+                          text = ~paste("Funçao :",nome_funcao,
                                          '<br>Total:R$',formatar(total)),
                           hoverinfo = 'text')%>%
     layout(title = "Recursos Função Por Ano",
            #legend = list(y = 0.5),
-           yaxis = list(title = ~total,type = "log",showticklabels = FALSE),
-           xaxis = list(title = ~nome_funcao),
+           yaxis = list(title = ~total,showticklabels = FALSE),
+           xaxis = list(title = ~ano),
            barmode = 'group')%>%
     hide_colorbar()
     
@@ -86,7 +86,7 @@ grafico_barra_funcao <- function(){
 }
 
 # INÍCIO
-grafico_barra_tipo()
-grafico_barra_funcao()
+# grafico_barra_tipo()
+ grafico_barra_funcao()
 
 
