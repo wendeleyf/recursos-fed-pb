@@ -51,6 +51,27 @@ buscar_total_recursos_por_municipio <- function(){
   total_recursos
 }
 
+# -
+# Retorna um data.frame de recursos federais, coletados na base de dados e então tratados adicionando uma coluna de
+# 'esfera', para categorizar os tipos de recursos
+# @return {data.frame} recursos - O data.frame tratado por esferas 
+# - 
+buscar_recursos_por_tipo <- function(){
+  conexao <- conectar_postgre_sql()
+  recursos_tbl <- tbl(conexao, "recursos_portal_transparencia")
+  recursos <- recursos_tbl %>%
+    collect()
+  recursos$esfera[recursos$tipo_favorecido == "Administracao Publica Estadual ou do Distrito Federal"] <- "Estado"
+  recursos$esfera[recursos$tipo_favorecido == "Administracao Publica Municipal"] <- "Municipal"
+  recursos$esfera[recursos$tipo_favorecido == "Entidades Sem Fins Lucrativos"] <- "Entidades Sem Fins Lucrativos"
+  
+  recursos$esfera[recursos$tipo_favorecido == "Fundo Publico" & grepl(x = recursos$nome_favorecido, pattern = "MUN.") == TRUE] <- "Municipal"
+  recursos$esfera[recursos$tipo_favorecido == "Fundo Publico" & grepl(x = recursos$nome_favorecido, pattern = "MINICIPAL") == TRUE] <- "Municipal"
+  recursos$esfera[recursos$tipo_favorecido == "Fundo Publico" & grepl(x = recursos$nome_favorecido, pattern = "FMS") == TRUE] <- "Municipal"
+  recursos$esfera[recursos$tipo_favorecido == "Fundo Publico" & grepl(x = recursos$nome_favorecido, pattern = "ESTADU") == TRUE] <- "Estado"
+  recursos
+}
+
 
 # INÍCIO
 recursos <- buscar_recursos_no_banco_de_dados()

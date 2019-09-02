@@ -62,7 +62,8 @@ ui <- dashboardPage(
     tabItems(
       tabItem(tabName = "home",
              source(file = "pages/home.R", encoding = "UTF-8")[1]
-      )
+      ),
+      tabItem(tabName = "transferencias_gerais")
     )
   )
 )
