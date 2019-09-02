@@ -10,6 +10,7 @@ ui <- dashboardPage(
     
     sidebarMenu(
       menuItem(
+        tabName = "home",
         text = "Inicial",
         icon = icon("home")
       ),
@@ -57,7 +58,13 @@ ui <- dashboardPage(
     
     width = 250
   ),
-  dashboardBody()
+  dashboardBody(
+    tabItems(
+      tabItem(tabName = "home",
+             source(file = "pages/home.R", encoding = "UTF-8")[1]
+      )
+    )
+  )
 )
 
 
