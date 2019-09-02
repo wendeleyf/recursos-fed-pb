@@ -41,3 +41,11 @@ conectar_postgre_sql <- function(){
   )
   return(conexao)
 }
+# -
+# Formata valores (Função Wendeley)
+# Retorna valores formatado
+# @return {value}  - O valor formatado padrão 000.00,00
+# - 
+formatar <- function(valor){
+  format(valor, digits = 10, big.mark = ".", decimal.mark = ",")
+}
