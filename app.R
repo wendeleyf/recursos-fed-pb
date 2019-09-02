@@ -18,6 +18,7 @@ ui <- dashboardPage(
         text = "Transferências Fiscais",
         icon = icon("flag"),
         menuSubItem(
+          tabName = "transferencias_gerais",
           text = "Visão Geral",
           icon = icon("eye")
         ),
@@ -63,7 +64,8 @@ ui <- dashboardPage(
       tabItem(tabName = "home",
              source(file = "pages/home.R", encoding = "UTF-8")[1]
       ),
-      tabItem(tabName = "transferencias_gerais")
+      tabItem(tabName = "transferencias_gerais",
+              source(file = "pages/transferencias_gerais.R", encoding = "UTF-8")[1])
     )
   )
 )

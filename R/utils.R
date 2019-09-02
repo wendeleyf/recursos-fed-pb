@@ -17,7 +17,7 @@
    library(shiny)
    library(shinydashboard)
    library(plotly)
-
+   library(shinyWidgets)
 ## -------------------------------------------
 ##
 ## Sumário de Funções
