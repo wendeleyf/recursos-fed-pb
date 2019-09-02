@@ -10,6 +10,7 @@ ui <- dashboardPage(
     
     sidebarMenu(
       menuItem(
+        tabName = "home",
         text = "Inicial",
         icon = icon("home")
       ),
@@ -57,7 +58,19 @@ ui <- dashboardPage(
     
     width = 250
   ),
-  dashboardBody()
+  dashboardBody(
+    tabItems(
+      tabItem(tabName = "home",
+              fluidRow(
+                box(
+                  h2("Recursos Federais na Paraíba", class = "text-center"),
+                  img(src ='img/fundo_3.png', class = "img img-responsive"),
+                  width = 12
+                )
+              )
+      )
+    )
+  )
 )
 
 
