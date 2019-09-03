@@ -29,10 +29,49 @@ fluidRow(
     ),
   box(
     title = "Categoria Transf.",
+    pickerInput(
+      inputId = "categoria_input",
+      label = "Escolha uma categoria",
+      choices = c("Constitucionais & Royalties", "Legais, Voluntárias e Específicas")
+    ),
     width = 3
+    
     ),
   box(
     title = "Tipo Transf.",
+    pickerInput(
+      inputId = "tipo_input",
+      label = "Escolha um tipo",
+      choices = c("PNATE", "Emendas", "SUS")
+    ),
     width = 3
-    )
+    ),
+  box(
+    title = "Funcional Programático",
+    column(
+      pickerInput(
+        inputId = "funcao_governo_input",
+        label = "Função do governo",
+        choices = c("Educação", "Segurança", "Saúde")
+      ),
+      width = 4
+    ),
+    column(
+      pickerInput(
+        inputId = "programa_input",
+        label = "Programa",
+        choices = c("Fortalecimento do SUS","Qualidade na escola")
+      ),
+      width = 4
+    ),
+    column(
+      pickerInput(
+        inputId = "acao_input",
+        label = "Ação",
+        choices = c("Construção de UBS", "Operações Especiais")
+      ),
+      width = 4
+    ),
+    width = 12
+  )
 )
