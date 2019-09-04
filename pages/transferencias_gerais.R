@@ -61,5 +61,19 @@ fluidRow(
       width = 4
     ),
     width = 12
+  ),
+  
+  box(
+    title = "Resultados",
+    tabsetPanel(
+      type = "tabs",
+      tabPanel("Gráfico"),
+      tabPanel(
+        title = "Dados",
+        tags$br(),
+        DT::dataTableOutput("tabela_transferencias_geral")
+      )
+      ),
+    width = 12
   )
 )

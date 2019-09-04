@@ -18,6 +18,7 @@
    library(shinydashboard)
    library(plotly)
    library(shinyWidgets)
+   library(DT)
 ## -------------------------------------------
 ##
 ## Sumário de Funções

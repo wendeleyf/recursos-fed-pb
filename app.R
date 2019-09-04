@@ -145,7 +145,26 @@ server <- function(input, output, session){
         `deselect-all-text` = "Nenhum"
       )
     )
+  })
+  
+  output$tabela_transferencias_geral <- DT::renderDataTable({
+    lista_funcao <- input$funcao_governo_input
+    lista_programa <- input$programa_governo_input
+    lista_acao <- input$acao_governo_input
     
+    tabela <- recursos %>%
+      filter(
+        nome_funcao %in% lista_funcao,
+        nome_programa %in% lista_programa,
+        nome_acao %in% lista_acao
+      )
+    
+    DT::datatable(
+      data = tabela,
+      class = "compact stripe",
+      rownames = FALSE,
+      selection = "none"
+    )
   })
 }
 
