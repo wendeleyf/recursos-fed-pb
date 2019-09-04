@@ -77,16 +77,16 @@ server <- function(input, output, session){
   output$filtro_funcao <- renderUI({
     lista_funcao <- recursos %>%
       distinct(nome_funcao) %>%
-      arrange(nome_funcao)
-    
-    lista_funcao %>%
+      arrange(nome_funcao) %>%
       split(.$nome_funcao) %>%
       map(~.$nome_funcao)
   
   pickerInput(
     inputId = "funcao_governo_input",
-    label = "Função do governo: ",
+    label = "Função do governo:",
     choices = lista_funcao,
+    selected = lista_funcao,
+    multiple = TRUE,
     options = list(
       `actions-box` = TRUE,
       `none-selected-text` = "Nenhum selecionado.",
@@ -96,6 +96,57 @@ server <- function(input, output, session){
   )
   )
 })
+  
+  output$filtro_programa <- renderUI({
+    lista_funcao <- input$funcao_governo_input
+    lista_programa <- recursos %>%
+      filter(nome_funcao %in% lista_funcao) %>%
+      distinct(nome_programa) %>%
+      arrange(nome_programa) %>%
+      split(.$nome_programa) %>%
+      map(~.$nome_programa)
+    
+    pickerInput(
+      inputId = "programa_governo_input",
+      label = "Programa:",
+      choices = lista_programa,
+      selected = lista_programa,
+      multiple = TRUE,
+      options = list(
+        `actions-box` = TRUE,
+        `none-selected-text` = "Nenhum selecionado.",
+        `none-results-text` = "Nenhum resultado.",
+        `select-all-text` = 'Todos',
+        `deselect-all-text` = "Nenhum"
+      )
+    )
+  })
+  
+  output$filtro_tipo_transferencia <- renderUI({
+    lista_programa <- input$programa_governo_input
+    lista_tipo_transf <- recursos %>%
+      filter(nome_programa %in% lista_programa) %>%
+      distinct(nome_acao) %>%
+      arrange(nome_acao) %>%
+      split(.$nome_acao) %>%
+      map(~.$nome_acao)
+    
+    pickerInput(
+      inputId = "acao_governo_input",
+      label = "Ação:",
+      choices = lista_tipo_transf,
+      selected = lista_tipo_transf,
+      multiple = TRUE,
+      options = list(
+        `actions-box` = TRUE,
+        `none-selected-text` = "Nenhum selecionado.",
+        `none-results-text` = "Nenhum resultado.",
+        `select-all-text` = 'Todos',
+        `deselect-all-text` = "Nenhum"
+      )
+    )
+    
+  })
 }
 
 shinyApp(ui = ui, server = server)

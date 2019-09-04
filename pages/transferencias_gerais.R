@@ -53,19 +53,11 @@ fluidRow(
      width = 4
     ),
     column(
-      pickerInput(
-        inputId = "programa_input",
-        label = "Programa",
-        choices = c("Fortalecimento do SUS","Qualidade na escola")
-      ),
+      uiOutput("filtro_programa"),
       width = 4
     ),
     column(
-      pickerInput(
-        inputId = "acao_input",
-        label = "Ação",
-        choices = c("Construção de UBS", "Operações Especiais")
-      ),
+      uiOutput("filtro_tipo_transferencia"),
       width = 4
     ),
     width = 12
