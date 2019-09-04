@@ -162,6 +162,7 @@ server <- function(input, output, session){
     DT::datatable(
       data = tabela,
       class = "compact stripe",
+      extensions = "Responsive",
       rownames = FALSE,
       selection = "none"
     )

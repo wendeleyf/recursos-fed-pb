@@ -50,15 +50,15 @@ fluidRow(
     title = "Funcional Programático",
     column(
      uiOutput("filtro_funcao"),
-     width = 4
+     width = 12
     ),
     column(
       uiOutput("filtro_programa"),
-      width = 4
+      width = 12
     ),
     column(
       uiOutput("filtro_tipo_transferencia"),
-      width = 4
+      width = 12
     ),
     width = 12
   ),
