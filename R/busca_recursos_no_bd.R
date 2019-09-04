@@ -72,6 +72,15 @@ buscar_recursos_por_tipo <- function(){
   recursos
 }
 
+# buscar_lista_funcao_recursos <- function(){
+#   conexao <- conectar_postgre_sql()
+#   lista_funcao_tbl <- tbl(conexao, "recursos_portal_transparencia")
+#   lista_funcao <- lista_funcao_tbl %>%
+#     distinct(nome_funcao) %>%
+#     collect()
+#   lista_funcao
+# }
 
 # INÍCIO
 recursos <- buscar_recursos_no_banco_de_dados()
+

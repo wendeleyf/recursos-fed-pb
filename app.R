@@ -1,4 +1,5 @@
 source("R/utils.R")
+source("R/busca_recursos_no_bd.R")
 
 ui <- dashboardPage(
   dashboardHeader(
@@ -73,6 +74,28 @@ ui <- dashboardPage(
 
 server <- function(input, output, session){
   
+  output$filtro_funcao <- renderUI({
+    lista_funcao <- recursos %>%
+      distinct(nome_funcao) %>%
+      arrange(nome_funcao)
+    
+    lista_funcao %>%
+      split(.$nome_funcao) %>%
+      map(~.$nome_funcao)
+  
+  pickerInput(
+    inputId = "funcao_governo_input",
+    label = "Função do governo: ",
+    choices = lista_funcao,
+    options = list(
+      `actions-box` = TRUE,
+      `none-selected-text` = "Nenhum selecionado.",
+      `none-results-text` = "Nenhum resultado.",
+      `select-all-text` = 'Todos',
+      `deselect-all-text` = "Nenhum"
+  )
+  )
+})
 }
 
 shinyApp(ui = ui, server = server)

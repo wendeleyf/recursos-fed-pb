@@ -49,12 +49,8 @@ fluidRow(
   box(
     title = "Funcional Programático",
     column(
-      pickerInput(
-        inputId = "funcao_governo_input",
-        label = "Função do governo",
-        choices = c("Educação", "Segurança", "Saúde")
-      ),
-      width = 4
+     uiOutput("filtro_funcao"),
+     width = 4
     ),
     column(
       pickerInput(
