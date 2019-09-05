@@ -11,9 +11,9 @@ fluidRow(
   box(
     title = "Tipo de Ente",
     prettyRadioButtons(
-      inputId = "tipo_ente",
+      inputId = "ente_input",
       label = "Escolha",
-      choices = c("Municipal", "Estado", "Entidades sem fins lucrativos")
+      choices = c("Municipal", "Estado", "Entidades Sem Fins Lucrativos")
     ),
     width = 3
     ),
@@ -22,8 +22,8 @@ fluidRow(
     sliderTextInput(
       inputId = "ano_input",
       label = "Escolha os anos",
-      choices = c(2010,2011,2012,2013,2014,2015),
-      selected = c(2010, 2013)
+      choices = c(2017,2018,2019),
+      selected = c(2018,2019)
     ),
     width = 3
     ),
@@ -32,7 +32,16 @@ fluidRow(
     pickerInput(
       inputId = "categoria_input",
       label = "Escolha uma categoria",
-      choices = c("Constitucionais & Royalties", "Legais, Voluntárias e Específicas")
+      choices = c("Constitucionais e Royalties", "Legais, Voluntárias e Específicas"),
+      selected = c("Constitucionais e Royalties", "Legais, Voluntárias e Específicas"),
+      multiple = TRUE,
+      options = list(
+        `actions-box` = TRUE,
+        `none-selected-text` = "Nenhum selecionado.",
+        `none-results-text` = "Nenhum resultado.",
+        `select-all-text` = 'Todos',
+        `deselect-all-text` = "Nenhum"
+      )
     ),
     width = 3
     
