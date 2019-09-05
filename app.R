@@ -147,6 +147,10 @@ server <- function(input, output, session){
       )
     )
   })
+
+  output$filtro_tipo_transferencia <- renderUI({
+    
+  })
   
 
   
@@ -154,12 +158,17 @@ server <- function(input, output, session){
     lista_funcao <- input$funcao_governo_input
     lista_programa <- input$programa_governo_input
     lista_acao <- input$acao_governo_input
-    
+    anos <- input$ano_input[1]:input$ano_input[2]
+    ente <- input$ente_input
+    categoria <- input$categoria_input
     tabela <- recursos %>%
       filter(
         nome_funcao %in% lista_funcao,
         nome_programa %in% lista_programa,
-        nome_acao %in% lista_acao
+        nome_acao %in% lista_acao,
+        ano %in% anos,
+        esfera == ente,
+        tipo_transferencia %in% categoria
       )
     
     DT::datatable(
@@ -167,7 +176,8 @@ server <- function(input, output, session){
       class = "compact stripe",
       extensions = "Responsive",
       rownames = FALSE,
-      selection = "none"
+      selection = "none",
+      options = list(language = list(url = 'linguagens/Portuguese-Brasil.json'))
     )
   })
 
