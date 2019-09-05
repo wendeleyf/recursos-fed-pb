@@ -48,11 +48,7 @@ fluidRow(
     ),
   box(
     title = "Tipo Transf.",
-    pickerInput(
-      inputId = "tipo_input",
-      label = "Escolha um tipo",
-      choices = c("PNATE", "Emendas", "SUS")
-    ),
+    uiOutput("filtro_tipo"),
     width = 3
     ),
   box(

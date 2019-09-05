@@ -75,8 +75,35 @@ ui <- dashboardPage(
 
 server <- function(input, output, session){
   
+  output$filtro_tipo <- renderUI({
+    lista_categoria <- input$categoria_input
+    lista_tipo_transferencia <- recursos %>%
+      filter(tipo_transferencia %in% lista_categoria) %>%
+      distinct(linguagem_cidada) %>%
+      arrange(linguagem_cidada) %>%
+      split(.$linguagem_cidada) %>%
+      map(~.$linguagem_cidada)
+    
+    pickerInput(
+      inputId = "tipo_input",
+      label = "Tipo Transferência",
+      choices = lista_tipo_transferencia,
+      selected = lista_tipo_transferencia,
+      multiple = TRUE,
+      options = list(
+        `actions-box` = TRUE,
+        `none-selected-text` = "Nenhum selecionado.",
+        `none-results-text` = "Nenhum resultado.",
+        `select-all-text` = 'Todos',
+        `deselect-all-text` = "Nenhum"
+      )
+    )
+  })
+  
   output$filtro_funcao <- renderUI({
+    lista_tipo_transferencia <- input$tipo_input
     lista_funcao <- recursos %>%
+      filter(linguagem_cidada %in% lista_tipo_transferencia) %>%
       distinct(nome_funcao) %>%
       arrange(nome_funcao) %>%
       split(.$nome_funcao) %>%
@@ -148,17 +175,12 @@ server <- function(input, output, session){
     )
   })
 
-  output$filtro_tipo_transferencia <- renderUI({
-    
-  })
-  
-
-  
   output$tabela_transferencias_geral <- DT::renderDataTable({
     lista_funcao <- input$funcao_governo_input
     lista_programa <- input$programa_governo_input
     lista_acao <- input$acao_governo_input
     anos <- input$ano_input[1]:input$ano_input[2]
+    tipo <- input$tipo_input
     ente <- input$ente_input
     categoria <- input$categoria_input
     tabela <- recursos %>%
@@ -167,6 +189,7 @@ server <- function(input, output, session){
         nome_programa %in% lista_programa,
         nome_acao %in% lista_acao,
         ano %in% anos,
+        linguagem_cidada %in% tipo,
         esfera == ente,
         tipo_transferencia %in% categoria
       )
@@ -188,8 +211,6 @@ server <- function(input, output, session){
     programa <- input$programa_governo_input
     acao <- input$acao_governo_input
     
-
-    
     #agurpando dados
     df_ano_tipo <- recursos %>% 
       filter(
@@ -199,7 +220,7 @@ server <- function(input, output, session){
       )%>%
       group_by(ano,tipo_transferencia)%>%
       summarise(total = sum(valor_transferido))
-    View(df_ano_tipo)
+    # View(df_ano_tipo)
     
     #gerando grafico
     p_total_tipo <- plot_ly(df_ano_tipo,
