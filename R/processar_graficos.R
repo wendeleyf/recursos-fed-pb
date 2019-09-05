@@ -59,14 +59,9 @@ grafico_barra_tipo <- function(){
 
 grafico_barra_funcao <- function(df){
   
-
+  iconv(from = "UTF-8", to="ASCII//TRANSLIT")
   #agurpando dados
   df_ano_funcao <- df %>%
-    filter(
-      nome_funcao %in% funcao,
-      nome_programa %in% programa,
-      nome_acao %in% acao
-    )%>%
     group_by(ano,nome_funcao)%>%
     summarise(total = sum(valor_transferido))
 
@@ -76,6 +71,7 @@ grafico_barra_funcao <- function(df){
                           y = ~log(total),
                           name = ~nome_funcao,
                           color= ~log2(total),
+                          type = 'bar',
                           marker = list(colorscale='Viridis',
                                         reversescale = T),
                           text = ~paste("Funçao :",nome_funcao,
@@ -143,9 +139,6 @@ grafico_linhas_funcao <- function(){
   
   p_total_funcao_linha
 }
-
-
-
 
 
 

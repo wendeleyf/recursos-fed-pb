@@ -205,40 +205,43 @@ server <- function(input, output, session){
   })
 
   
-  output$grafico_tipo_transf <- renderPlotly({  
+  output$grafico_tipo_transf <- renderPlotly({
     
-    funcao <- input$funcao_governo_input
-    programa <- input$programa_governo_input
-    acao <- input$acao_governo_input
-    
-    #agurpando dados
-    df_ano_tipo <- recursos %>% 
+    lista_funcao <- input$funcao_governo_input
+    lista_programa <- input$programa_governo_input
+    lista_acao <- input$acao_governo_input
+    anos <- input$ano_input[1]:input$ano_input[2]
+    tipo <- input$tipo_input
+    ente <- input$ente_input
+    categoria <- input$categoria_input
+    tabela <- recursos %>%
       filter(
-        nome_funcao %in% funcao,
-        nome_programa %in% programa,
-        nome_acao %in% acao
-      )%>%
-      group_by(ano,tipo_transferencia)%>%
+        nome_funcao %in% lista_funcao,
+        nome_programa %in% lista_programa,
+        nome_acao %in% lista_acao,
+        ano %in% anos,
+        linguagem_cidada %in% tipo,
+        esfera == ente,
+        tipo_transferencia %in% categoria
+      )%>%group_by(tipo_transferencia,ano)%>%
       summarise(total = sum(valor_transferido))
-    # View(df_ano_tipo)
     
-    #gerando grafico
-    p_total_tipo <- plot_ly(df_ano_tipo,
-                            x = ~ano , 
-                            y = ~total,
-                            type = "bar",
-                            name = ~tipo_transferencia,
-                            text = ~paste("Ano :",ano,'<br>Total:R$',formatar(total)),
-                            hoverinfo = 'text')%>%
-      layout(title = "Recursos Tipo Por Ano",
-             yaxis = list(title = ~`total`,type = "log"),
-             xaxis = list(title = ~tipo_transferencia),
-             barmode = 'group')
+    p_total_funcao_linha <- plot_ly(tabela, 
+                                    y = ~total, 
+                                    x = ~`ano`, 
+                                    name = ~tipo_transferencia, 
+                                    type = 'bar',
+                                    #mode = 'rs',
+                                    line = list(shape = "spline")) %>%
+      layout(title = "Função por ano",
+             yaxis = list(title = ~total,type = "log" ),
+             xaxis = list(title = ~`ano`))
+    
+    p_total_funcao_linha
     
 
     
-    
-    })
+  })
 }
 
 shinyApp(ui = ui, server = server)
