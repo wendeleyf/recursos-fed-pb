@@ -57,12 +57,19 @@ grafico_barra_tipo <- function(){
 # @return {grafico_barra_função} recursos - grafico_barra com informações da base de dados
 # - 
 
-grafico_barra_funcao <- function(){
+grafico_barra_funcao <- function(df){
+  
+
   #agurpando dados
-  df_ano_funcao <- recursos %>%
+  df_ano_funcao <- df %>%
+    filter(
+      nome_funcao %in% funcao,
+      nome_programa %in% programa,
+      nome_acao %in% acao
+    )%>%
     group_by(ano,nome_funcao)%>%
     summarise(total = sum(valor_transferido))
-  
+
   #gerando grafico
   p_total_nome <- plot_ly(df_ano_funcao,
                           x= ~ano,
@@ -81,8 +88,7 @@ grafico_barra_funcao <- function(){
            barmode = 'group')%>%
     hide_colorbar()
     
-  #retornar grafico
-  p_total_nome
+
            
   
 }

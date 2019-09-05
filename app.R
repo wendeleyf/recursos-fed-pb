@@ -1,5 +1,6 @@
 source("R/utils.R")
 source("R/busca_recursos_no_bd.R")
+#source("R/processar_graficos.R")
 
 ui <- dashboardPage(
   dashboardHeader(
@@ -147,6 +148,8 @@ server <- function(input, output, session){
     )
   })
   
+
+  
   output$tabela_transferencias_geral <- DT::renderDataTable({
     lista_funcao <- input$funcao_governo_input
     lista_programa <- input$programa_governo_input
@@ -167,6 +170,44 @@ server <- function(input, output, session){
       selection = "none"
     )
   })
+
+  
+  output$grafico_tipo_transf <- renderPlotly({  
+    
+    funcao <- input$funcao_governo_input
+    programa <- input$programa_governo_input
+    acao <- input$acao_governo_input
+    
+
+    
+    #agurpando dados
+    df_ano_tipo <- recursos %>% 
+      filter(
+        nome_funcao %in% funcao,
+        nome_programa %in% programa,
+        nome_acao %in% acao
+      )%>%
+      group_by(ano,tipo_transferencia)%>%
+      summarise(total = sum(valor_transferido))
+    View(df_ano_tipo)
+    
+    #gerando grafico
+    p_total_tipo <- plot_ly(df_ano_tipo,
+                            x = ~ano , 
+                            y = ~total,
+                            type = "bar",
+                            name = ~tipo_transferencia,
+                            text = ~paste("Ano :",ano,'<br>Total:R$',formatar(total)),
+                            hoverinfo = 'text')%>%
+      layout(title = "Recursos Tipo Por Ano",
+             yaxis = list(title = ~`total`,type = "log"),
+             xaxis = list(title = ~tipo_transferencia),
+             barmode = 'group')
+    
+
+    
+    
+    })
 }
 
 shinyApp(ui = ui, server = server)

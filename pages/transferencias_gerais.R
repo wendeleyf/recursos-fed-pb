@@ -67,7 +67,8 @@ fluidRow(
     title = "Resultados",
     tabsetPanel(
       type = "tabs",
-      tabPanel("Gráfico"),
+      tabPanel(title = "Gráfico",
+              plotly::plotlyOutput("grafico_tipo_transf")),
       tabPanel(
         title = "Dados",
         tags$br(),
