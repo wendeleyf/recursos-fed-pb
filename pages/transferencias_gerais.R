@@ -69,7 +69,7 @@ fluidRow(
   ),
   
   box(
-    title = "Resultados",
+    title = "Recursos Transferidos por Categoria",
     tabsetPanel(
       type = "tabs",
       tabPanel(title = "Gráfico",
@@ -80,6 +80,20 @@ fluidRow(
         DT::dataTableOutput("tabela_transferencias_geral")
       )
       ),
+    width = 12
+  ),
+  box(
+    title = "Recursos Transferidos por Tipo de Favorecido",
+    tabsetPanel(
+      type = "tabs",
+      tabPanel(title = "Gráfico",
+               plotly::plotlyOutput("grafico_transferencias_favorecido")),
+      tabPanel(
+        title = "Dados",
+        tags$br(),
+        DT::dataTableOutput("tabela_transferencias_favorecido")
+      )
+    ),
     width = 12
   )
 )
