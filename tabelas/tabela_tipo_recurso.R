@@ -18,13 +18,19 @@ output$tabela_transferencias_geral <- DT::renderDataTable({
     )%>%group_by(tipo_transferencia,ano)%>%
     summarise(total = sum(valor_transferido))%>%
     spread(ano, total)
-  
+  nomes <- colnames(tabela)
   DT::datatable(
     data = tabela,
     class = "compact stripe",
     extensions = "Responsive",
     rownames = FALSE,
     selection = "none",
-    options = list(language = list(url = 'linguagens/Portuguese-Brasil.json'))
+    options = list(language = list(url = 'linguagens/Portuguese-Brasil.json')) 
+  ) %>% formatCurrency(
+    columns = nomes,
+    currency = "R$",
+    digits = 2,
+    mark = ".",
+    dec.mark = ","
   )
 })
