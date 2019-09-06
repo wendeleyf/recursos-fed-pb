@@ -73,7 +73,7 @@ fluidRow(
     tabsetPanel(
       type = "tabs",
       tabPanel(title = "Gráfico",
-              plotly::plotlyOutput("grafico_tipo_transf")),
+              plotly::plotlyOutput("grafico_transferencias_geral")),
       tabPanel(
         title = "Dados",
         tags$br(),

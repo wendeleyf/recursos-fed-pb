@@ -50,3 +50,15 @@ conectar_postgre_sql <- function(){
 formatar <- function(valor){
   format(valor, digits = 10, big.mark = ".", decimal.mark = ",")
 }
+
+# Formata Moeda (Função Jocelino)
+formata_moeda <- function(valores) {
+  require(stringr)
+  preform <- valores %>%
+    as.numeric() %>%
+    format(nsmall=2, decimal.mark = ",", big.mark = ".", scientific = FALSE) %>%
+    str_trim()
+  
+  str_c("R$ ", preform)
+  
+}
