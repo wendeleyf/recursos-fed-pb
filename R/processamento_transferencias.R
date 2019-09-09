@@ -41,7 +41,7 @@ ler_rds_recursos_pb <- function(caminho){
 # - 
 tratar_rds_recursos_pb <- function(recursos_pb){
   rds <- recursos_pb
-  rds$ano_mes <- NULL
+  #rds$ano_mes <- NULL
   rds$uf <- NULL
   rds$codigo_municipio_siafi <- NULL
   rds$codigo_funcao <- NULL
@@ -77,3 +77,4 @@ recursos <- buscar_recursos_no_banco_de_dados()
 caminho_rds_recursos <- "data/recursos_pb_enxuto.rds"
 recursos_pb <- readRDS(caminho_rds_transferencias)
 total <- buscar_total_recursos_por_municipio()
+

@@ -174,7 +174,7 @@ server <- function(input, output, session){
       )
     )
   })
-
+  #total de recursos por categoria
   output$tabela_transferencias_geral <- DT::renderDataTable({
     source("tabelas/tabela_tipo_recurso.R",local = TRUE, encoding = "UTF-8")
 
@@ -185,6 +185,18 @@ server <- function(input, output, session){
     source("graficos/grafico_tipo_recurso.R", local = TRUE, encoding = "UTF-8")
 
     })
+  
+  #total de recursos por função
+  output$tabela_transferencias_funcao <- DT::renderDataTable({
+    source("tabelas/tabela_tipo_funcao.R",local = TRUE, encoding = "UTF-8")
+    
+  })
+
+  
+  output$grafico_transferencias_funcao <- renderPlotly({
+    source("graficos/grafico_tipo_funcao.R", local = TRUE, encoding = "UTF-8")
+    
+  })
 }
 
 shinyApp(ui = ui, server = server)

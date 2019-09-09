@@ -83,4 +83,5 @@ buscar_recursos_por_tipo <- function(){
 
 # INÍCIO
 recursos <- buscar_recursos_no_banco_de_dados()
+ 
 

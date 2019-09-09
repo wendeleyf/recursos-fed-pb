@@ -57,11 +57,11 @@ grafico_barra_tipo <- function(){
 # @return {grafico_barra_função} recursos - grafico_barra com informações da base de dados
 # - 
 
-grafico_barra_funcao <- function(df){
+grafico_barra_funcao <- function(){
   
-  iconv(from = "UTF-8", to="ASCII//TRANSLIT")
+ 
   #agurpando dados
-  df_ano_funcao <- df %>%
+  df_ano_funcao <- recursos %>%
     group_by(ano,nome_funcao)%>%
     summarise(total = sum(valor_transferido))
 
@@ -83,7 +83,7 @@ grafico_barra_funcao <- function(df){
            xaxis = list(title = ~ano),
            barmode = 'group')%>%
     hide_colorbar()
-    
+  p_total_nome
 
            
   

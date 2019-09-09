@@ -31,6 +31,6 @@ output$grafico_transferencias_geral <- renderPlotly({
                         showticklabels = FALSE,
                         type = "log"),
            xaxis = list(title = ~tipo_transferencia),
-           barmode = 'group')
+           barmode = 'group')%>%config(displaylogo = FALSE)
   )
 })
