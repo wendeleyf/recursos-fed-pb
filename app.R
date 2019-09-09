@@ -1,5 +1,7 @@
 source("R/utils.R")
 source("R/busca_recursos_no_bd.R")
+source("mapas/mapa_total_transferencia_municipios.R")
+
 #source("R/processar_graficos.R")
 
 ui <- dashboardPage(
@@ -25,6 +27,7 @@ ui <- dashboardPage(
           icon = icon("eye")
         ),
         menuSubItem(
+          tabName = "transferencias_municipais",
           text = "Visão Municipal",
           icon = icon("eye")
         ),
@@ -61,13 +64,17 @@ ui <- dashboardPage(
     
     width = 250
   ),
+  
   dashboardBody(
     tabItems(
       tabItem(tabName = "home",
              source(file = "pages/home.R", encoding = "UTF-8")[1]
       ),
       tabItem(tabName = "transferencias_gerais",
-              source(file = "pages/transferencias_gerais.R", encoding = "UTF-8")[1])
+              source(file = "pages/transferencias_gerais.R", encoding = "UTF-8")[1]
+      ),
+      tabItem(tabName = "transferencias_municipais",
+              source(file = "pages/transferencias_municipais.R", encoding = "UTF-8")[1])
     )
   )
 )
@@ -75,6 +82,7 @@ ui <- dashboardPage(
 
 server <- function(input, output, session){
   
+  # Transferências Gerais
   output$filtro_tipo <- renderUI({
     lista_categoria <- input$categoria_input
     lista_tipo_transferencia <- recursos %>%
@@ -108,22 +116,22 @@ server <- function(input, output, session){
       arrange(nome_funcao) %>%
       split(.$nome_funcao) %>%
       map(~.$nome_funcao)
-  
-  pickerInput(
-    inputId = "funcao_governo_input",
-    label = "Função do governo:",
-    choices = lista_funcao,
-    selected = lista_funcao,
-    multiple = TRUE,
-    options = list(
-      `actions-box` = TRUE,
-      `none-selected-text` = "Nenhum selecionado.",
-      `none-results-text` = "Nenhum resultado.",
-      `select-all-text` = 'Todos',
-      `deselect-all-text` = "Nenhum"
-  )
-  )
-})
+    
+    pickerInput(
+      inputId = "funcao_governo_input",
+      label = "Função do governo:",
+      choices = lista_funcao,
+      selected = lista_funcao,
+      multiple = TRUE,
+      options = list(
+        `actions-box` = TRUE,
+        `none-selected-text` = "Nenhum selecionado.",
+        `none-results-text` = "Nenhum resultado.",
+        `select-all-text` = 'Todos',
+        `deselect-all-text` = "Nenhum"
+      )
+    )
+  })
   
   output$filtro_programa <- renderUI({
     lista_funcao <- input$funcao_governo_input
@@ -174,6 +182,9 @@ server <- function(input, output, session){
       )
     )
   })
+
+  
+  
   #total de recursos por categoria
   output$tabela_transferencias_geral <- DT::renderDataTable({
     source("tabelas/tabela_tipo_recurso.R",local = TRUE, encoding = "UTF-8")
@@ -192,11 +203,19 @@ server <- function(input, output, session){
     
   })
 
-  
   output$grafico_transferencias_funcao <- renderPlotly({
     source("graficos/grafico_tipo_funcao.R", local = TRUE, encoding = "UTF-8")
     
   })
+  
+# ============================================================================
+  
+  # Transferências Municipais
+  
+  output$mapa_transferencias_municipio <- renderLeaflet(
+    gerar_mapa()
+  )
+  
 }
 
 shinyApp(ui = ui, server = server)

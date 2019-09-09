@@ -19,6 +19,8 @@
    library(plotly)
    library(shinyWidgets)
    library(DT)
+   library(sf)
+   library(leaflet)
 ## -------------------------------------------
 ##
 ## Sumário de Funções
