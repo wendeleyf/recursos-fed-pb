@@ -75,7 +75,15 @@ gerar_mapa <- function(){
         style = list("font-weight" = "normal", padding = "3px 8px"),
         textsize = "15px",
         direction = "auto"
-      )
+      ) 
+    )%>%
+    addLegend(
+      pal = pal_fun,
+      values = ~total_transferido,
+      opacity = 0.7,
+      title = "Total Transferido aos Municipios",
+      position = "bottomright",
+      labFormat = labelFormat(prefix = "R$")
     )
   
 }
