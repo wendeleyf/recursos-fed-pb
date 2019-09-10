@@ -16,22 +16,23 @@ output$grafico_transferencias_funcao <- renderPlotly({
       linguagem_cidada %in% tipo,
       esfera == ente,
       tipo_transferencia %in% categoria
-    )%>%group_by(nome_funcao,ano)%>%
+    )%>%group_by(nome_funcao,ano_mes)%>%
     summarise(total = sum(valor_transferido))
   
  
   p_total_funcao_linha <- plot_ly(tabela, 
                                   y = ~total, 
-                                  x = ~`ano`, 
+                                  x = ~`ano_mes`, 
                                   name = ~nome_funcao, 
                                   type = 'scatter',
-                                  mode = 'lines+markers',
-                                  line = list(shape = "spline")) %>%
+                                  mode = 'lines+markers'
+                                  #line = list(shape = "spline")
+                                  ) %>%
     layout(title = "Função por ano",
            yaxis = list(title = ~total,
                         type = "log",
                         showticklabels = FALSE ),
-           xaxis = list(title = ~`ano`))%>%
+           xaxis = list(title = ~`ano_mes`))%>%
     hide_colorbar()
   
 })
