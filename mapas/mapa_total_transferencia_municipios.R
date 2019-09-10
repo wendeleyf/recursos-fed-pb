@@ -40,7 +40,7 @@ gerar_mapa <- function(){
                       bins = map_breaks, 
                       pretty = TRUE, 
                       reverse = TRUE)
-  mapa_popup <- paste0(shp_total_transf$descricao, formata_moeda(shp_total_transf$total_transferido))
+  mapa_popup <- paste0(shp_total_transf$descricao,":",formata_moeda(shp_total_transf$total_transferido))
   
   labels <- sprintf(
     "<strong>%s</strong><br/>%s",

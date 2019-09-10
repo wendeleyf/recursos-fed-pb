@@ -19,11 +19,12 @@ fluidRow(
     ),
   box(
     title = "Ano(s)",
-    sliderTextInput(
-      inputId = "ano_input",
+    sliderInput(
+      inputId = "ano_input_municipio",
       label = "Escolha os anos",
-      choices = c(2017,2018,2019),
-      selected = c(2018,2019)
+      min = 2017,
+      max = 2019,
+      value = c(2017,2019)
     ),
     width = 3
     ),

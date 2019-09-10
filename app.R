@@ -212,6 +212,131 @@ server <- function(input, output, session){
   
   # Transferências Municipais
   
+  output$filtro_tipo_municipios <- renderUI({
+    lista_categoria <- input$categoria_input_municipios
+    lista_tipo_transferencia <- recursos %>%
+      filter(tipo_transferencia %in% lista_categoria) %>%
+      distinct(linguagem_cidada) %>%
+      arrange(linguagem_cidada) %>%
+      split(.$linguagem_cidada) %>%
+      map(~.$linguagem_cidada)
+    
+    pickerInput(
+      inputId = "tipo_input_municipios",
+      label = "Escolha um tipo",
+      choices = lista_tipo_transferencia,
+      selected = lista_tipo_transferencia,
+      multiple = TRUE,
+      options = list(
+        `actions-box` = TRUE,
+        `none-selected-text` = "Nenhum selecionado.",
+        `none-results-text` = "Nenhum resultado.",
+        `select-all-text` = 'Todos',
+        `deselect-all-text` = "Nenhum"
+      )
+    )
+  })
+  
+  output$filtro_funcao_municipios <- renderUI({
+    lista_tipo_transferencia <- input$tipo_input_municipios
+    lista_funcao <- recursos %>%
+      filter(linguagem_cidada %in% lista_tipo_transferencia) %>%
+      distinct(nome_funcao) %>%
+      arrange(nome_funcao) %>%
+      split(.$nome_funcao) %>%
+      map(~.$nome_funcao)
+    
+    pickerInput(
+      inputId = "funcao_governo_input_municipios",
+      label = "Função do governo:",
+      choices = lista_funcao,
+      selected = lista_funcao,
+      multiple = TRUE,
+      options = list(
+        `actions-box` = TRUE,
+        `none-selected-text` = "Nenhum selecionado.",
+        `none-results-text` = "Nenhum resultado.",
+        `select-all-text` = 'Todos',
+        `deselect-all-text` = "Nenhum"
+      )
+    )
+  })
+  
+  output$filtro_programa_municipios <- renderUI({
+    lista_funcao <- input$funcao_governo_input_municipios
+    lista_programa <- recursos %>%
+      filter(nome_funcao %in% lista_funcao) %>%
+      distinct(nome_programa) %>%
+      arrange(nome_programa) %>%
+      split(.$nome_programa) %>%
+      map(~.$nome_programa)
+    
+    pickerInput(
+      inputId = "programa_governo_input_municipios",
+      label = "Programa:",
+      choices = lista_programa,
+      selected = lista_programa,
+      multiple = TRUE,
+      options = list(
+        `actions-box` = TRUE,
+        `none-selected-text` = "Nenhum selecionado.",
+        `none-results-text` = "Nenhum resultado.",
+        `select-all-text` = 'Todos',
+        `deselect-all-text` = "Nenhum"
+      )
+    )
+  })
+  
+  output$filtro_tipo_transferencia_municipios <- renderUI({
+    lista_programa <- input$programa_governo_input_municipios
+    lista_tipo_transf <- recursos %>%
+      filter(nome_programa %in% lista_programa) %>%
+      distinct(nome_acao) %>%
+      arrange(nome_acao) %>%
+      split(.$nome_acao) %>%
+      map(~.$nome_acao)
+    
+    pickerInput(
+      inputId = "acao_governo_input_municipios",
+      label = "Ação:",
+      choices = lista_tipo_transf,
+      selected = lista_tipo_transf,
+      multiple = TRUE,
+      options = list(
+        `actions-box` = TRUE,
+        `none-selected-text` = "Nenhum selecionado.",
+        `none-results-text` = "Nenhum resultado.",
+        `select-all-text` = 'Todos',
+        `deselect-all-text` = "Nenhum"
+      )
+    )
+  })
+  
+  output$filtro_nomes_municipios <- renderUI({
+    lista_municipios <- recursos %>%
+      distinct(nome_municipio) %>%
+      arrange(nome_municipio)
+    
+    # Função necessária para remover os valores "" da lista de municipios
+    lista_municipios <- lista_municipios[!apply(lista_municipios == "", 1, all),]
+    
+    lista_municipios <- lista_municipios %>%
+      split(.$nome_municipio) %>%
+      map(~.$nome_municipio)
+    
+    pickerInput(
+      inputId = "nome_municipio_input",
+      label = "Selecione o Município",
+      choices = lista_municipios,
+      options = list(
+        `none-selected-text` = "Nenhum selecionado.",
+        `none-results-text` = "Nenhum resultado.",
+        `select-all-text` = 'Todos',
+        `deselect-all-text` = "Nenhum"
+      )
+    )
+  })
+  
   output$mapa_transferencias_municipio <- renderLeaflet(
     gerar_mapa()
   )
