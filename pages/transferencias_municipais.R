@@ -12,11 +12,11 @@ fluidRow(
   box(
     title = "Ano(s)",
     sliderInput(
-      inputId = "ano_input_municipio",
+      inputId = "ano_input_municipios",
       label = "Escolha os anos",
       min = 2017,
       max = 2019,
-      value = c(2017,2019)
+      value = c(2017, 2019)
       ),
     width = 3
     ),
@@ -62,8 +62,19 @@ fluidRow(
   ),
   box(
     title = "Mapa de recursos transferidos",
-    solidHeader = TRUE,
-    leafletOutput("mapa_transferencias_municipio"),
+    tabsetPanel(
+      type = "tabs",
+      tabPanel(
+        title = "Mapa",
+        leafletOutput("mapa_transferencias_municipio")
+      ),
+      tabPanel(
+        title = "Dados",
+        tags$br(),
+        DT::dataTableOutput("tabela_total_mapa")
+      )
+    ),
+
     width = 12
   )
 )

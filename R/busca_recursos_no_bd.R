@@ -29,6 +29,7 @@ buscar_recursos_no_banco_de_dados <- function(){
   conexao <- conectar_postgre_sql()
   recursos_tbl <- tbl(conexao, "recursos_portal_transparencia")
   recursos <- recursos_tbl %>%
+    filter(valor_transferido > 0) %>%
     collect()
   dbDisconnect(conexao)
   recursos

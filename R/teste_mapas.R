@@ -1,32 +1,23 @@
 source("R/busca_recursos_no_bd.R")
 
-gerar_mapa <- function(input_anos, input_funcao, input_programa, input_acao, input_tipo, input_categoria){
-  lista_funcao <- input_funcao
-  lista_programa <- input_programa
-  lista_acao <- input_acao
-  tipo <- input_tipo
-  categoria <- input_categoria
-  anos <- input_anos[1]:input_anos[2]
+gerar_mapa <- function(){
+  anos <- c(2017,2018,2019)
   total_recursos <- recursos %>%
     filter(
-      nome_funcao %in% lista_funcao,
-      nome_programa %in% lista_programa,
-      nome_acao %in% lista_acao,
       ano %in% anos,
-      linguagem_cidada %in% tipo,
       esfera == "Municipal",
-      tipo_transferencia %in% categoria
-      ) %>%
+    ) %>%
     group_by(nome_municipio, ano) %>% 
     summarise(total_transferido = sum(valor_transferido)) %>%
     arrange(nome_municipio)
-    # spread(ano, total_transferido)
-
-  total_recursos <- aggregate(total_recursos$total_transferido, by=list(nome_municipio = total_recursos$nome_municipio), FUN=sum)
+  # spread(ano, total_transferido)
+  
+  tabela <- aggregate(tabela$total, by=list(nome_municipio = tabela$nome_municipio), FUN=sum)
+  glimpse(tabela)
   # print(rowSums(total_recursos[, -1]))
   # total_recursos <- cbind(total_recursos,
   #                         total_total = rowSums(total_recursos[, -1]))
-
+  
   # total_recursos <- total_recursos[-1, ]
   
   municipios <- readRDS("data/municipios_pb.rds")

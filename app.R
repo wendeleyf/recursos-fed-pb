@@ -183,8 +183,7 @@ server <- function(input, output, session){
     )
   })
 
-  
-  
+
   #total de recursos por categoria
   output$tabela_transferencias_geral <- DT::renderDataTable({
     source("tabelas/tabela_tipo_recurso.R",local = TRUE, encoding = "UTF-8")
@@ -337,9 +336,27 @@ server <- function(input, output, session){
     )
   })
   
-  output$mapa_transferencias_municipio <- renderLeaflet(
-    gerar_mapa()
+  output$mapa_transferencias_municipio <- renderLeaflet({
+    input_anos <- input$ano_input_municipios
+    input_funcao <- input$funcao_governo_input_municipios
+    input_programa <- input$programa_governo_input_municipios
+    input_acao <- input$acao_governo_input_municipios
+    input_tipo <- input$tipo_input_municipios
+    input_categoria <- input$categoria_input_municipios
+    gerar_mapa(
+      input_anos,
+      input_funcao,
+      input_programa,
+      input_acao,
+      input_tipo,
+      input_categoria
+    )
+  }
   )
+  
+  output$tabela_total_mapa <- DT::renderDataTable({
+    source("tabelas/tabela_total_mapa.R", local = TRUE, encoding = "UTF-8")
+  })
   
 }
 
