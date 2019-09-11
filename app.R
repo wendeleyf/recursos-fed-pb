@@ -232,7 +232,7 @@ server <- function(input, output, session){
   
   # Transferências Municipais
   
-  filter_data <- reactive({
+  filter_data_municipio <- reactive({
     lista_funcao <- input$funcao_governo_input_municipios
     lista_programa <- input$programa_governo_input_municipios
     lista_acao <- input$acao_governo_input_municipios
@@ -399,7 +399,7 @@ server <- function(input, output, session){
   )
   
   output$tabela_top_total_transferido <- DT::renderDataTable({
-    tabela <- filter_data() %>%
+    tabela <- filter_data_municipio() %>%
     spread(ano, total)
     tabela[is.na(tabela)] <- 0
     tabela <- cbind(tabela,
@@ -430,15 +430,15 @@ server <- function(input, output, session){
   })
   
   output$tabela_bottom_total_transferido <- DT::renderDataTable({
-    tabela <- filter_data() %>%
+    tabela <- filter_data_municipio() %>%
       spread(ano, total)
     tabela[is.na(tabela)] <- 0
     tabela <- cbind(tabela,
                     total_total = rowSums(tabela[, -1]))
     tabela <- tabela %>%
-      arrange(desc(total_total))
+      arrange(total_total)
     
-    tabela <- tail(tabela, 10)
+    tabela <- head(tabela, 10)
     
     nomes <- colnames(tabela)
     DT::datatable(
