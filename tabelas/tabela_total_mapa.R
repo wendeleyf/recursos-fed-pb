@@ -34,7 +34,8 @@ output$tabela_total_mapa <- DT::renderDataTable({
     extensions = "Responsive",
     rownames = FALSE,
     selection = "none",
-    options = list(language = list(url = 'linguagens/Portuguese-Brasil.json')) 
+    options = list(language = list(url = 'linguagens/Portuguese-Brasil.json'),
+                   info = TRUE) 
   ) %>% 
     formatCurrency(
     columns = nomes,

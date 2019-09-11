@@ -211,6 +211,28 @@ server <- function(input, output, session){
   
   # Transferências Municipais
   
+  filter_data <- reactive({
+    lista_funcao <- input$funcao_governo_input_municipios
+    lista_programa <- input$programa_governo_input_municipios
+    lista_acao <- input$acao_governo_input_municipios
+    anos <- input$ano_input_municipios[1]:input$ano_input_municipios[2]
+    tipo <- input$tipo_input_municipios
+    categoria <- input$categoria_input_municipios
+    
+    tabela <- recursos %>%
+      filter(
+        nome_funcao %in% lista_funcao,
+        nome_programa %in% lista_programa,
+        nome_acao %in% lista_acao,
+        ano %in% anos,
+        linguagem_cidada %in% tipo,
+        esfera == "Municipal",
+        tipo_transferencia %in% categoria
+      ) %>%
+      group_by(nome_municipio, ano) %>%
+      summarise(total = sum(valor_transferido)) 
+  })
+  
   output$filtro_tipo_municipios <- renderUI({
     lista_categoria <- input$categoria_input_municipios
     lista_tipo_transferencia <- recursos %>%
@@ -352,7 +374,70 @@ server <- function(input, output, session){
       input_categoria
     )
   }
+  
   )
+  
+  output$tabela_top_total_transferido <- DT::renderDataTable({
+    tabela <- filter_data() %>%
+    spread(ano, total)
+    tabela[is.na(tabela)] <- 0
+    tabela <- cbind(tabela,
+                            total_total = rowSums(tabela[, -1]))
+    tabela <- tabela %>%
+      arrange(desc(total_total))
+    
+   tabela <- head(tabela, 10)
+   
+   nomes <- colnames(tabela)
+   DT::datatable(
+     data = tabela,
+     class = "compact stripe",
+     extensions = "Responsive",
+     rownames = FALSE,
+     selection = "none",
+     options = list(language = list(url = 'linguagens/Portuguese-Brasil.json'),
+                    paging = FALSE,
+                    searching = FALSE) 
+   ) %>% 
+     formatCurrency(
+       columns = nomes,
+       currency = "R$",
+       digits = 2,
+       mark = ".",
+       dec.mark = ","
+     )
+  })
+  
+  output$tabela_bottom_total_transferido <- DT::renderDataTable({
+    tabela <- filter_data() %>%
+      spread(ano, total)
+    tabela[is.na(tabela)] <- 0
+    tabela <- cbind(tabela,
+                    total_total = rowSums(tabela[, -1]))
+    tabela <- tabela %>%
+      arrange(desc(total_total))
+    
+    tabela <- tail(tabela, 10)
+    
+    nomes <- colnames(tabela)
+    DT::datatable(
+      data = tabela,
+      class = "compact stripe",
+      extensions = "Responsive",
+      rownames = FALSE,
+      selection = "none",
+      options = list(language = list(url = 'linguagens/Portuguese-Brasil.json'),
+                     paging = FALSE,
+                     searching = FALSE) 
+    ) %>% 
+      formatCurrency(
+        columns = nomes,
+        currency = "R$",
+        digits = 2,
+        mark = ".",
+        dec.mark = ","
+      )
+  })
   
   output$tabela_total_mapa <- DT::renderDataTable({
     source("tabelas/tabela_total_mapa.R", local = TRUE, encoding = "UTF-8")

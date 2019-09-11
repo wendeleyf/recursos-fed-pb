@@ -76,5 +76,15 @@ fluidRow(
     ),
 
     width = 12
+  ),
+  box(
+    title = "Top 10",
+    DT::dataTableOutput("tabela_top_total_transferido"),
+    width = 12
+  ),
+  box(
+    title = "Bottom 10",
+    DT::dataTableOutput("tabela_bottom_total_transferido"),
+    width = 12
   )
 )
