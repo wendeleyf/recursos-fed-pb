@@ -1,38 +1,33 @@
 output$grafico_transferencias_funcao <- renderPlotly({
   
-  lista_funcao <- input$funcao_governo_input
-  lista_programa <- input$programa_governo_input
-  lista_acao <- input$acao_governo_input
-  anos <- input$ano_input[1]:input$ano_input[2]
-  tipo <- input$tipo_input
-  ente <- input$ente_input
-  categoria <- input$categoria_input
-  tabela <- recursos %>%
-    filter(
-      nome_funcao %in% lista_funcao,
-      nome_programa %in% lista_programa,
-      nome_acao %in% lista_acao,
-      ano %in% anos,
-      linguagem_cidada %in% tipo,
-      esfera == ente,
-      tipo_transferencia %in% categoria
-    )%>%group_by(nome_funcao,ano_mes)%>%
+  tabela <- filter_data()%>%
+    group_by(nome_funcao,ano_mes)%>%
     summarise(total = sum(valor_transferido))
   
+  tabela$ano_mes <-  ymd(paste(tabela$ano_mes,"01",sep = ""))
+  
+  #paleta de cores
+  color_pal = viridis::viridis_pal(direction = -1,option = "D")(15)
  
   p_total_funcao_linha <- plot_ly(tabela, 
                                   y = ~total, 
-                                  x = ~`ano_mes`, 
+                                  x = ~ano_mes, 
                                   name = ~nome_funcao, 
                                   type = 'scatter',
-                                  mode = 'lines+markers'
-                                  #line = list(shape = "spline")
+                                  mode = 'lines+markers',
+                                  color = ~nome_funcao,
+                                  #fill = 'tozeroy',
+                                  colors = color_pal,
+                                  text = ~paste("Função de governo :",nome_funcao,"<br>Data :",format(ymd(ano_mes),"%B-%Y"),'<br>Total:R$',formatar(total)),
+                                  hoverinfo = 'text'
                                   ) %>%
-    layout(title = "Função por ano",
+    layout(title = "",
            yaxis = list(title = ~total,
                         type = "log",
                         showticklabels = FALSE ),
-           xaxis = list(title = ~`ano_mes`))%>%
+           xaxis = list(title =~`ano_mes`
+                        #,showticklabels = FALSE
+                        ))%>%
     hide_colorbar()
   
 })
