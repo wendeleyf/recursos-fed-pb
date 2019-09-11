@@ -21,6 +21,8 @@
    library(DT)
    library(sf)
    library(leaflet)
+   library(lubridate)
+   library(viridis)
 ## -------------------------------------------
 ##
 ## Sumário de Funções
