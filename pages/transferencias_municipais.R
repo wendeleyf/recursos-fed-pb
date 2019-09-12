@@ -86,5 +86,10 @@ fluidRow(
     title = "Bottom 10",
     DT::dataTableOutput("tabela_bottom_total_transferido"),
     width = 12
+  ),
+  box(
+    title = "Análise por Município",
+    uiOutput("filtro_nomes_municipios"),
+    width = 12
   )
 )

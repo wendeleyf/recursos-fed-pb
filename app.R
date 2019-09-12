@@ -366,32 +366,6 @@ server <- function(input, output, session){
     )
   })
   
-  # Output: Filtro de Picker Input dinâmico com os municípios da Paraíba ---
-  output$filtro_nomes_municipios <- renderUI({
-    lista_municipios <- recursos %>%
-      distinct(nome_municipio) %>%
-      arrange(nome_municipio)
-    
-    # Função necessária para remover os valores "" da lista de municipios
-    lista_municipios <- lista_municipios[!apply(lista_municipios == "", 1, all),]
-    
-    lista_municipios <- lista_municipios %>%
-      split(.$nome_municipio) %>%
-      map(~.$nome_municipio)
-    
-    pickerInput(
-      inputId = "nome_municipio_input",
-      label = "Selecione o Município",
-      choices = lista_municipios,
-      options = list(
-        `none-selected-text` = "Nenhum selecionado.",
-        `none-results-text` = "Nenhum resultado.",
-        `select-all-text` = 'Todos',
-        `deselect-all-text` = "Nenhum"
-      )
-    )
-  })
-  
   # Output: Mapa Leaflet com o total das transferências aos municípios da Paraíba---
   output$mapa_transferencias_municipio <- renderLeaflet({
     input_anos <- input$ano_input_municipios
@@ -473,6 +447,32 @@ server <- function(input, output, session){
         mark = ".",
         dec.mark = ","
       )
+  })
+  
+  # Output: Filtro de Picker Input dinâmico com os municípios da Paraíba ---
+  output$filtro_nomes_municipios <- renderUI({
+    lista_municipios <- recursos %>%
+      distinct(nome_municipio) %>%
+      arrange(nome_municipio)
+    
+    # Função necessária para remover os valores "" da lista de municipios
+    lista_municipios <- lista_municipios[!apply(lista_municipios == "", 1, all),]
+    
+    lista_municipios <- lista_municipios %>%
+      split(.$nome_municipio) %>%
+      map(~.$nome_municipio)
+    
+    pickerInput(
+      inputId = "nome_municipio_input",
+      label = "Selecione o Município",
+      choices = lista_municipios,
+      options = list(
+        `none-selected-text` = "Nenhum selecionado.",
+        `none-results-text` = "Nenhum resultado.",
+        `select-all-text` = 'Todos',
+        `deselect-all-text` = "Nenhum"
+      )
+    )
   })
   
   # Output: data.frame com os valores de total dos municípios utilizados no mapa Leaflet---
