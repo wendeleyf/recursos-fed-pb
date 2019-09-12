@@ -8,7 +8,7 @@ output$tabela_total_mapa <- DT::renderDataTable({
   tabela <- cbind(tabela,
                   total_total = rowSums(tabela[, -1]))
   tabela <- tabela %>%
-    arrange(total_total)
+    arrange(desc(total_total))
 
 
   nomes <- colnames(tabela)
