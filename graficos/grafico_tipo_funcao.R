@@ -27,7 +27,6 @@ output$grafico_transferencias_funcao <- renderPlotly({
                         showticklabels = FALSE ),
            xaxis = list(title =~`ano_mes`
                         #,showticklabels = FALSE
-                        ))%>%
-    hide_colorbar()
+                        ))
   
 })
