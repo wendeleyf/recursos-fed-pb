@@ -481,6 +481,12 @@ server <- function(input, output, session){
   output$tabela_total_mapa <- DT::renderDataTable({
     source("tabelas/tabela_total_mapa.R", local = TRUE, encoding = "UTF-8")
   })
+  # Output: Grafico com os valores de transferencias por municipio selecionado
+  output$grafico_categoria_municipio <- renderPlotly({
+    municipio <- input$nome_municipio_input
+    source("graficos/grafico_categoria_municipio.R",local = TRUE, encoding = "UTF-8")
+    
+  })
   
 }
 

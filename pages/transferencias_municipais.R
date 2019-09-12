@@ -97,7 +97,8 @@ fluidRow(
     tabsetPanel(
       type = "tabs",
       tabPanel(
-        title = "Gráfico"
+        title = "Gráfico",
+        plotly::plotlyOutput("grafico_categoria_municipio")
       ),
       tabPanel(
         title = "Dados"
@@ -112,6 +113,7 @@ fluidRow(
       type = "tabs",
       tabPanel(
         title = "Gráfico"
+        
       ),
       tabPanel(
         title = "Dados"
