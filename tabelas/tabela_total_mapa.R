@@ -21,11 +21,7 @@ output$tabela_total_mapa <- DT::renderDataTable({
 
   
   tabela <- aggregate(tabela$total, by=list(nome_municipio = tabela$nome_municipio), FUN=sum)
-  # Testes
-  
-  # rowSums(tabela[, -1])
-  # tabela <- cbind(tabela,
-  #                         total_total = rowSums(tabela[, -1]))
+ 
   
   nomes <- colnames(tabela)
   DT::datatable(

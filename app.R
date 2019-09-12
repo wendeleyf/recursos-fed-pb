@@ -83,6 +83,30 @@ ui <- dashboardPage(
 server <- function(input, output, session){
   
   # Transferências Gerais
+  
+  # Reactive: data.frame reativo que atualiza sempre que os inputs da aplicação são selecionados,
+  # necessário para todas as operações que envolvem a atualização dos no painel
+  filter_data <- reactive({
+    lista_funcao <- input$funcao_governo_input
+    lista_programa <- input$programa_governo_input
+    lista_acao <- input$acao_governo_input
+    anos <- input$ano_input[1]:input$ano_input[2]
+    tipo <- input$tipo_input
+    ente <- input$ente_input
+    categoria <- input$categoria_input
+    recursos %>%
+      filter(
+        nome_funcao %in% lista_funcao,
+        nome_programa %in% lista_programa,
+        nome_acao %in% lista_acao,
+        ano %in% anos,
+        linguagem_cidada %in% tipo,
+        esfera == ente,
+        tipo_transferencia %in% categoria
+      )
+  })
+  
+  # Output: Filtro de Picker Input dinâmico com os tipos de transferências ---
   output$filtro_tipo <- renderUI({
     lista_categoria <- input$categoria_input
     lista_tipo_transferencia <- recursos %>%
@@ -108,6 +132,7 @@ server <- function(input, output, session){
     )
   })
   
+  # Output: Filtro de Picker Input dinâmico com as funções do governo ---
   output$filtro_funcao <- renderUI({
     lista_tipo_transferencia <- input$tipo_input
     lista_funcao <- recursos %>%
@@ -133,6 +158,7 @@ server <- function(input, output, session){
     )
   })
   
+  # Output: Filtro de Picker Input dinâmico com os programas do governo ---
   output$filtro_programa <- renderUI({
     lista_funcao <- input$funcao_governo_input
     lista_programa <- recursos %>%
@@ -158,6 +184,7 @@ server <- function(input, output, session){
     )
   })
   
+  # Output: Filtro de Picker Input dinâmico com as ações do governo ---
   output$filtro_tipo_transferencia <- renderUI({
     lista_programa <- input$programa_governo_input
     lista_tipo_transf <- recursos %>%
@@ -183,46 +210,25 @@ server <- function(input, output, session){
     )
   })
   
-  filter_data <- reactive({
-    lista_funcao <- input$funcao_governo_input
-    lista_programa <- input$programa_governo_input
-    lista_acao <- input$acao_governo_input
-    anos <- input$ano_input[1]:input$ano_input[2]
-    tipo <- input$tipo_input
-    ente <- input$ente_input
-    categoria <- input$categoria_input
-    recursos %>%
-      filter(
-        nome_funcao %in% lista_funcao,
-        nome_programa %in% lista_programa,
-        nome_acao %in% lista_acao,
-        ano %in% anos,
-        linguagem_cidada %in% tipo,
-        esfera == ente,
-        tipo_transferencia %in% categoria
-      )
-  })
-# ============================================================================
-  
-  # Transferências Visão Geral
-  
+  # Output: data.frame para construção de tabela com os valores das transferências gerais ao município da Paraiba
   output$tabela_transferencias_geral <- DT::renderDataTable({
     source("tabelas/tabela_tipo_recurso.R",local = TRUE, encoding = "UTF-8")
 
   })
 
-  
+  # Output: gráfico com os valores de transferência gerais ao município da Paraíba
   output$grafico_transferencias_geral <- renderPlotly({
     source("graficos/grafico_tipo_recurso.R", local = TRUE, encoding = "UTF-8")
 
     })
   
-  #total de recursos por função
+ # Output: data.frame com os valores das transferências gerais categorizadas por função
   output$tabela_transferencias_funcao <- DT::renderDataTable({
     source("tabelas/tabela_tipo_funcao.R",local = TRUE, encoding = "UTF-8")
     
   })
-
+  
+  # Output: gráfico com os valores de transferência gerais categorizadas por função
   output$grafico_transferencias_funcao <- renderPlotly({
     source("graficos/grafico_tipo_funcao.R", local = TRUE, encoding = "UTF-8")
     
@@ -232,6 +238,8 @@ server <- function(input, output, session){
   
   # Transferências Municipais
   
+  # Reactive: data.frame reativo que atualiza sempre que os inputs da aplicação são selecionados,
+  # necessário para todas as operações que envolvem a atualização dos dados referentes à visão municipal nos painéis.
   filter_data_municipio <- reactive({
     lista_funcao <- input$funcao_governo_input_municipios
     lista_programa <- input$programa_governo_input_municipios
@@ -254,6 +262,7 @@ server <- function(input, output, session){
       summarise(total = sum(valor_transferido)) 
   })
   
+  # Output: Filtro de Picker Input dinâmico com os tipos de transferências municipais ---
   output$filtro_tipo_municipios <- renderUI({
     lista_categoria <- input$categoria_input_municipios
     lista_tipo_transferencia <- recursos %>%
@@ -279,6 +288,7 @@ server <- function(input, output, session){
     )
   })
   
+  # Output: Filtro de Picker Input dinâmico as funções do governo municipais---
   output$filtro_funcao_municipios <- renderUI({
     lista_tipo_transferencia <- input$tipo_input_municipios
     lista_funcao <- recursos %>%
@@ -304,6 +314,7 @@ server <- function(input, output, session){
     )
   })
   
+  # Output: Filtro de Picker Input dinâmico com os programas do governo municipais ---
   output$filtro_programa_municipios <- renderUI({
     lista_funcao <- input$funcao_governo_input_municipios
     lista_programa <- recursos %>%
@@ -329,6 +340,7 @@ server <- function(input, output, session){
     )
   })
   
+  # Output: Filtro de Picker Input dinâmico com as ações do governo municipais ---
   output$filtro_tipo_transferencia_municipios <- renderUI({
     lista_programa <- input$programa_governo_input_municipios
     lista_tipo_transf <- recursos %>%
@@ -354,6 +366,7 @@ server <- function(input, output, session){
     )
   })
   
+  # Output: Filtro de Picker Input dinâmico com os municípios da Paraíba ---
   output$filtro_nomes_municipios <- renderUI({
     lista_municipios <- recursos %>%
       distinct(nome_municipio) %>%
@@ -379,6 +392,7 @@ server <- function(input, output, session){
     )
   })
   
+  # Output: Mapa Leaflet com o total das transferências aos municípios da Paraíba---
   output$mapa_transferencias_municipio <- renderLeaflet({
     input_anos <- input$ano_input_municipios
     input_funcao <- input$funcao_governo_input_municipios
@@ -395,9 +409,9 @@ server <- function(input, output, session){
       input_categoria
     )
   }
-  
   )
   
+  # Output: data.frame com os valores dos 10 municípios que mais receberam transferências na Paraíba ---
   output$tabela_top_total_transferido <- DT::renderDataTable({
     tabela <- filter_data_municipio() %>%
     spread(ano, total)
@@ -429,6 +443,7 @@ server <- function(input, output, session){
      )
   })
   
+  # Output: data.frame com os valores dos 10 municípios que menos receberam transferências na Paraíba ---
   output$tabela_bottom_total_transferido <- DT::renderDataTable({
     tabela <- filter_data_municipio() %>%
       spread(ano, total)
@@ -460,6 +475,7 @@ server <- function(input, output, session){
       )
   })
   
+  # Output: data.frame com os valores de total dos municípios utilizados no mapa Leaflet---
   output$tabela_total_mapa <- DT::renderDataTable({
     source("tabelas/tabela_total_mapa.R", local = TRUE, encoding = "UTF-8")
   })
