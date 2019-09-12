@@ -91,5 +91,32 @@ fluidRow(
     title = "Análise por Município",
     uiOutput("filtro_nomes_municipios"),
     width = 12
+  ),
+  box(
+    title = "Categoria de Transferência",
+    tabsetPanel(
+      type = "tabs",
+      tabPanel(
+        title = "Gráfico"
+      ),
+      tabPanel(
+        title = "Dados"
+      )
+      ),
+    width = 12
+    ),
+
+  box(
+    title = "Tipo de Transferência",
+    tabsetPanel(
+      type = "tabs",
+      tabPanel(
+        title = "Gráfico"
+      ),
+      tabPanel(
+        title = "Dados"
+      )
+    ),
+    width = 12
   )
 )
