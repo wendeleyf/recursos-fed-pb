@@ -257,9 +257,7 @@ server <- function(input, output, session){
         linguagem_cidada %in% tipo,
         esfera == "Municipal",
         tipo_transferencia %in% categoria
-      ) %>%
-      group_by(nome_municipio, ano) %>%
-      summarise(total = sum(valor_transferido)) 
+      )  
   })
   
   # Output: Filtro de Picker Input dinâmico com os tipos de transferências municipais ---
@@ -387,7 +385,9 @@ server <- function(input, output, session){
   
   # Output: data.frame com os valores dos 10 municípios que mais receberam transferências na Paraíba ---
   output$tabela_top_total_transferido <- DT::renderDataTable({
-    tabela <- filter_data_municipio() %>%
+    tabela <- filter_data_municipio()%>%
+      group_by(nome_municipio, ano) %>%
+      summarise(total = sum(valor_transferido))%>%
     spread(ano, total)
     tabela[is.na(tabela)] <- 0
     tabela <- cbind(tabela,
@@ -419,7 +419,9 @@ server <- function(input, output, session){
   
   # Output: data.frame com os valores dos 10 municípios que menos receberam transferências na Paraíba ---
   output$tabela_bottom_total_transferido <- DT::renderDataTable({
-    tabela <- filter_data_municipio() %>%
+    tabela <- filter_data_municipio()%>%
+      group_by(nome_municipio, ano) %>%
+      summarise(total = sum(valor_transferido))%>%
       spread(ano, total)
     tabela[is.na(tabela)] <- 0
     tabela <- cbind(tabela,
