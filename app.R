@@ -501,7 +501,7 @@ server <- function(input, output, session){
     tabela <- filter_data_municipio()%>%
       filter(nome_municipio == input$nome_municipio_input)
     
-    color_pal = viridis::viridis_pal(direction = -1,option = "D")(15)
+    color_pal = viridis::viridis_pal(direction = -1,option = "D")(5)
     treemap::treemap(tabela, 
             index="linguagem_cidada", 
             vSize="valor_transferido", 
@@ -509,10 +509,16 @@ server <- function(input, output, session){
             type="value",
             title = "",
             palette=color_pal,
+            fun.aggregate = "sum",
             border.col ="white",
-            position.legend="right",
+            position.legend="bottom",
             fontsize.labels = 16,
-            title.legend="")
+            title.legend="",
+            format.legend = list(scientific = FALSE, big.mark = ".", decimal.mark = ",")
+            
+            
+            
+            )
     
     
   })

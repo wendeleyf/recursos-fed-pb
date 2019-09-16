@@ -23,7 +23,7 @@
    library(leaflet)
    library(lubridate)
    library(viridis)
-   options(scipen = 999)  
+    
 ## -------------------------------------------
 ##
 ## Sumário de Funções
