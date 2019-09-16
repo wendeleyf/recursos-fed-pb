@@ -28,7 +28,6 @@ buscar_empenhos_municipais_sagres <- function(){
   
   registro_estranho <- empenhos_educacao %>%
     filter(unidade_gestora == "Fundo Municipal de Saúde de Alagoa Grande")
-  colnames(empenhos_educacao)
   
   saveRDS(object = registro_estranho, file = "data/registro_estranho.rds")
   
