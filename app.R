@@ -1,6 +1,6 @@
 source("R/utils.R")
 source("R/busca_recursos_no_bd.R")
-source("R/busca_empenhos_no_bd.R", encoding = "UTF-8")
+#source("R/busca_empenhos_no_bd.R", encoding = "UTF-8")
 source("mapas/mapa_total_transferencia_municipios.R")
 
 #source("R/processar_graficos.R")
@@ -502,7 +502,7 @@ server <- function(input, output, session){
       filter(nome_municipio == input$nome_municipio_input)
     
     color_pal = viridis::viridis_pal(direction = -1,option = "D")(15)
-    treemap::treemap(recursos, 
+    treemap::treemap(tabela, 
             index="linguagem_cidada", 
             vSize="valor_transferido", 
             vColor="valor_transferido",
@@ -512,7 +512,7 @@ server <- function(input, output, session){
             border.col ="white",
             position.legend="right",
             fontsize.labels = 16,
-            title.legend=("Valor"))
+            title.legend="")
     
     
   })
