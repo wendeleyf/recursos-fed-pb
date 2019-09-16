@@ -101,7 +101,8 @@ fluidRow(
         plotly::plotlyOutput("grafico_categoria_municipio")
       ),
       tabPanel(
-        title = "Dados"
+        title = "Dados",
+        DT::dataTableOutput("tabela_categoria_municipio")
       )
       ),
     width = 12
@@ -112,7 +113,8 @@ fluidRow(
     tabsetPanel(
       type = "tabs",
       tabPanel(
-        title = "Gráfico"
+        title = "Gráfico",
+        plotOutput("treemap_tipo_municipio")
         
       ),
       tabPanel(

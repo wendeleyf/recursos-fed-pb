@@ -1,11 +1,11 @@
-output$grafico_categoria_municipio <- renderPlotly({
+output$grafico_funcao_municipio <- renderPlotly({
   
   tabela <- filter_data_municipio()%>%
     filter(nome_municipio == input$nome_municipio_input)%>%
-    group_by(tipo_transferencia,ano_mes = ymd(paste(ano_mes,"01",sep = "")))%>%
+    group_by(linguagem_cidada,ano_mes)%>%
     summarise(total = sum(valor_transferido))
   
-  #tabela$ano_mes <-  ymd(paste(tabela$ano_mes,"01",sep = ""))
+  tabela$ano_mes <-  ymd(paste(tabela$ano_mes,"01",sep = ""))
   
   #paleta de cores
   color_pal = viridis::viridis_pal(direction = -1,option = "D")(15)
@@ -13,13 +13,13 @@ output$grafico_categoria_municipio <- renderPlotly({
   p_total_funcao_linha <- plot_ly(tabela, 
                                   y = ~total, 
                                   x = ~ano_mes, 
-                                  name = ~tipo_transferencia, 
+                                  name = ~linguagem_cidada, 
                                   type = 'scatter',
                                   mode = 'lines+markers',
-                                  color = ~tipo_transferencia,
-                                  fill = 'tozeroy',
+                                  color = ~linguagem_cidada,
+                                  #fill = 'tozeroy',
                                   #colors = color_pal,
-                                  text = ~paste("Categoria de Transferência :",tipo_transferencia,"<br>Data :",format(ymd(ano_mes),"%B-%Y"),'<br>Total:R$',formatar(total)),
+                                  text = ~paste("Função de governo :",linguagem_cidada,"<br>Data :",format(ymd(ano_mes),"%B-%Y"),'<br>Total:R$',formatar(total)),
                                   hoverinfo = 'text'
   ) %>%
     layout(title = "",
