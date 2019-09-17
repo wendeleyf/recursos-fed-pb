@@ -491,6 +491,8 @@ server <- function(input, output, session){
   
   # Output: data.frame com os valores de total dos municípios utilizados no grafico categoria municipio---
   output$tabela_categoria_municipio <- DT::renderDataTable({
+    
+    source("tabelas/tabela_categoria_municipio.R",local = TRUE,encoding = "UTF-8")
    
     
   })
