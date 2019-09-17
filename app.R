@@ -48,6 +48,7 @@ ui <- dashboardPage(
           text = "Municipal",
           icon = icon("eye"),
           menuSubItem(
+            tabName = "rastreamento_educacao",
             text = "Educação",
             icon = icon("book")
           ),
@@ -75,7 +76,9 @@ ui <- dashboardPage(
               source(file = "pages/transferencias_gerais.R", encoding = "UTF-8")[1]
       ),
       tabItem(tabName = "transferencias_municipais",
-              source(file = "pages/transferencias_municipais.R", encoding = "UTF-8")[1])
+              source(file = "pages/transferencias_municipais.R", encoding = "UTF-8")[1]),
+      tabItem(tabName = "rastreamento_educacao",
+              source(file = "pages/rastreamento_educacao.R", encoding = "UTF-8")[1])
     )
   )
 )
@@ -492,7 +495,6 @@ server <- function(input, output, session){
   # Output: data.frame com os valores de total dos municípios utilizados no grafico categoria municipio---
   output$tabela_categoria_municipio <- DT::renderDataTable({
    
-    
   })
   
   # Output: treemap com os valores de total por tipo municipio
@@ -501,7 +503,34 @@ server <- function(input, output, session){
     source("graficos/treemap_tipo_transf_municipio.R",local = TRUE,encoding = "UTF-8")
     })
   
+  # ============================================================================
   
+  # Rastremanto Munícipio - Educação
+  # Output: Filtro de Picker Input dinâmico com os municípios da Paraíba ---
+  output$filtro_nomes_rastreamento <- renderUI({
+    lista_municipios <- recursos %>%
+      distinct(nome_municipio) %>%
+      arrange(nome_municipio)
+    
+    # Função necessária para remover os valores "" da lista de municipios
+    lista_municipios <- lista_municipios[!apply(lista_municipios == "", 1, all),]
+    
+    lista_municipios <- lista_municipios %>%
+      split(.$nome_municipio) %>%
+      map(~.$nome_municipio)
+    
+    pickerInput(
+      inputId = "nome_municipio_rastreamento",
+      label = "Selecione o Município",
+      choices = lista_municipios,
+      options = list(
+        `none-selected-text` = "Nenhum selecionado.",
+        `none-results-text` = "Nenhum resultado.",
+        `select-all-text` = 'Todos',
+        `deselect-all-text` = "Nenhum"
+      )
+    )
+  })
 }
 
 shinyApp(ui = ui, server = server)
