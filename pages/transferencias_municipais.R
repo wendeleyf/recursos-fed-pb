@@ -94,6 +94,7 @@ fluidRow(
   ),
   box(
     title = "Categoria de Transferência",
+    collapsible=TRUE,
     tabsetPanel(
       type = "tabs",
       tabPanel(
@@ -110,6 +111,8 @@ fluidRow(
 
   box(
     title = "Tipo de Transferência",
+    solidHeader = TRUE,
+    collapsible = TRUE,
     tabsetPanel(
       type = "tabs",
       tabPanel(

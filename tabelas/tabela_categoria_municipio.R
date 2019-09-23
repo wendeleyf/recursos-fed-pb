@@ -8,6 +8,7 @@ output$tabela_categoria_municipio <- DT::renderDataTable({
   tabela$ano_mes <- format(ymd(tabela$ano_mes), "%B-%Y")
   
   tabela
+  
   nomes <- colnames(tabela)
   DT::datatable(
     data = tabela,

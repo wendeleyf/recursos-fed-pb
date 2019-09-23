@@ -1,11 +1,10 @@
 output$treemap_tipo_municipio <- renderPlot({
   
-  tabela <- filter_data_municipio()%>%
-    filter(nome_municipio == input$nome_municipio_input)
+  tabela <- filter_data()
   
   color_pal = viridis::viridis_pal(direction = -1,option = "D")(5)
-  treemap::treemap(tabela, 
-                   index="linguagem_cidada", 
+  p <- treemap::treemap(recursos, 
+                   index=c("linguagem_cidada"),
                    vSize="valor_transferido", 
                    vColor="valor_transferido",
                    type="value",
@@ -21,6 +20,5 @@ output$treemap_tipo_municipio <- renderPlot({
                    
                    
   )
-  
   
 })
