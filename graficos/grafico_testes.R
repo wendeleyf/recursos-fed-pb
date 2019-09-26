@@ -11,6 +11,9 @@ empenhos$tipo_repasse [grepl(x = empenhos$fonte_recurso, pattern = "FNDE") == TR
 pagamentos$tipo_repasse [grepl(x = pagamentos$`descriã§ã£o da conta`, pattern = "FUNDEB") == TRUE] <-
   "FUNDEB"
 
+
+
+
 # df1 <- empenhos %>%
 #   filter(tipo_repasse == "FUNDEB" & nome_municipio ==  "BREJO DO CRUZ" ) %>%
 #   group_by(tipo_repasse,data = ano_emissao) %>%

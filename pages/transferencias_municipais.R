@@ -1,7 +1,7 @@
 fluidRow(
   box(
+    
     title = tags$strong("Transferências Fiscais aos Municípios PB"),
-    solidHeader = TRUE,
     tags$p("Painel que permite vizualizar a totalidade das transferencias fiscais aos municípios da Paraíba. 
            Pode-se selecionar 1 município para análise individual."),
     tags$p("É possível ver os dados sob vários angulos por meios das séries temporais para verificar como os recursos estão se comportando
@@ -62,6 +62,7 @@ fluidRow(
   ),
   box(
     title = "Mapa de recursos transferidos",
+    collapsible = TRUE,
     tabsetPanel(
       type = "tabs",
       tabPanel(
@@ -79,13 +80,29 @@ fluidRow(
   ),
   box(
     title = "Top 10",
-    DT::dataTableOutput("tabela_top_total_transferido"),
+    collapsible = TRUE,
+    tabsetPanel(
+      tabPanel(
+        title = "",
+        DT::dataTableOutput("tabela_top_total_transferido")
+      )
+    ),
     width = 12
   ),
+  
   box(
     title = "Bottom 10",
-    DT::dataTableOutput("tabela_bottom_total_transferido"),
+    collapsible=TRUE,
+    tabsetPanel(
+      tabPanel(
+        title = "",
+        DT::dataTableOutput("tabela_bottom_total_transferido")
+        
+      )
+      
+    ),
     width = 12
+    
   ),
   box(
     title = "Análise por Município",
@@ -111,11 +128,11 @@ fluidRow(
 
   box(
     title = "Tipo de Transferência",
-    solidHeader = TRUE,
     collapsible = TRUE,
-    tabsetPanel(
+      tabsetPanel( 
       type = "tabs",
       tabPanel(
+        
         title = "Gráfico",
         plotOutput("treemap_tipo_municipio")
         
