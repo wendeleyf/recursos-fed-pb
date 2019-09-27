@@ -1,5 +1,5 @@
 source("R/utils.R")
-source("R/busca_recursos_no_bd.R")
+
 
 buscar_empenhos_municipais_sagres <- function(){
   conexao <- conectar_postgre_sql()
