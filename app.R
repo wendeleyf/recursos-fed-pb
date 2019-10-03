@@ -533,6 +533,13 @@ server <- function(input, output, session){
       )
     )
   })
+  
+  # Output: 
+  output$grafico_fonte_recurso_educacao <- renderPlotly({
+    source("graficos/grafico_fonte_recurso_educacao.R", local = TRUE, encoding = "UTF-8")
+    
+  })
+  
 }
 
 shinyApp(ui = ui, server = server)

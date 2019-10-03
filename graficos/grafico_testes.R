@@ -2,8 +2,8 @@ source("R/busca_empenhos_no_bd.R")
 source("R/busca_pagamentos_no_bd.R")
 library(circlepackeR)
 
-empenhos$vl_Empenho <-
-  as.numeric(gsub(",", ".", gsub("\\.", "", empenhos$vl_Empenho)))
+empenhos$vl_Empenho <- formatar(empenhos$vl_Empenho)
+ # as.numeric(gsub(",", ".", gsub("\\.", "", empenhos$vl_Empenho)))
 
 empenhos$tipo_repasse [grepl(x = empenhos$fonte_recurso, pattern = "FUNDEB") == TRUE] <- "FUNDEB"
 empenhos$tipo_repasse [grepl(x = empenhos$fonte_recurso, pattern = "PNAE") == TRUE] <- "PNAE"
@@ -86,23 +86,21 @@ p1
 #gasto por sub funçao
 
 teste <- empenhos%>%
-  group_by(tipo_repasse,ano_emissao,sub_funcao)%>%
+  group_by(tipo_repasse,ano_emissao)%>%
   summarise(total = sum(vl_Empenho))
 
-p <- plot_ly(teste,
-              y = ~total,
-              x = ~tipo_repasse,
-              type = 'bar',
-              name = ~ano_emissao,
-              text = ~paste("",tipo_repasse,
-                            "<br>Ano :",ano_emissao,'<br>Total:R$',formatar(total),sub_funcao),
-              hoverinfo = 'text')%>%
-  layout(title = "Educação",
-         yaxis = list(title = "",
-                      showticklabels = FALSE,
-                      type = "log"),
-         xaxis = list(title = ~ano_emissao),
-         barmode = 'group')%>%config(displaylogo = FALSE)
+p <- ggplot(teste, aes(fill=tipo_repasse, y=log10(total), x=tipo_repasse)) + 
+  geom_bar(position="dodge", stat="identity") +
+  scale_fill_viridis(discrete = T, option = "D",direction = 1) +
+  ggtitle("Programas") +
+  facet_wrap(~ano_emissao) +
+  
+  theme(legend.position=~total) +
+  xlab("") +
+  
+  ylab("") 
 
+  
 
-p
+p%>%style( hoverinfo = "none")%>%ggplotly()
+
