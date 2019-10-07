@@ -28,11 +28,13 @@ fluidRow(
     width = 12
   ),
   box(
-    title = "Valor transferido por aluno",
+    title = "Fonte do Recurso ",
+    collapsible=TRUE,
     tabsetPanel(
       type = "tabs",
       tabPanel(
-        title = "Gráfico"
+        title = "Gráfico",
+        plotly::plotlyOutput("grafico_fonte_recurso_educacao")
       ),
       tabPanel(
         title = "Dados"
