@@ -87,7 +87,9 @@ ui <- dashboardPage(
       tabItem(tabName = "transferencias_municipais",
               source(file = "pages/transferencias_municipais.R", encoding = "UTF-8")[1]),
       tabItem(tabName = "rastreamento_educacao_individual",
-              source(file = "pages/rastreamento_educacao.R", encoding = "UTF-8")[1])
+              source(file = "pages/rastreamento_educacao.R", encoding = "UTF-8")[1]),
+      tabItem(tabName = "rastreamento_educacao_geral",
+              source(file = "pages/rastreamento_educacao_geral.R", encoding = "UTF-8")[1])
     )
   )
 )
