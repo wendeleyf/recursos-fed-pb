@@ -11,6 +11,7 @@ fluidRow(
     ),
   box(
     title = "Mapa dos valores transferidos",
+    leafletOutput("mapa_total_educacao_geral"),
     width = 12
   ),
   box(

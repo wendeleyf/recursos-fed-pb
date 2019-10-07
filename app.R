@@ -2,6 +2,7 @@ source("R/utils.R")
 source("R/busca_recursos_no_bd.R")
 #source("R/busca_empenhos_no_bd.R", encoding = "UTF-8")
 source("mapas/mapa_total_transferencia_municipios.R")
+source("mapas/mapa_total_educacao_geral.R")
 
 #source("R/processar_graficos.R")
 
@@ -525,7 +526,16 @@ server <- function(input, output, session){
   
   # ============================================================================
   
-  # Rastremanto Munícipio - Educação
+  # Rastreamento Município - Educação Geral
+  
+  output$mapa_total_educacao_geral <- renderLeaflet({
+    funcao <- "Educação"
+    gerar_mapa_total_educacao(funcao)
+  })
+  
+  # ============================================================================
+  
+  # Rastremanto Munícipio - Educação Individual
   # Output: Filtro de Picker Input dinâmico com os municípios da Paraíba ---
   output$filtro_nomes_rastreamento <- renderUI({
     lista_municipios <- recursos %>%
