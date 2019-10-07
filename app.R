@@ -47,10 +47,19 @@ ui <- dashboardPage(
         menuItem(
           text = "Municipal",
           icon = icon("eye"),
-          menuSubItem(
-            tabName = "rastreamento_educacao",
+          menuItem(
             text = "Educação",
-            icon = icon("book")
+            icon = icon("book"),
+            menuSubItem(
+              tabName = "rastreamento_educacao_geral",
+              text = "Visão Geral",
+              icon = icon("eye")
+            ),
+            menuSubItem(
+              tabName = "rastreamento_educacao_individual",
+              text = "Visão Individual",
+              icon = icon("eye")
+            )
           ),
           menuSubItem(
             text = "Saúde",
@@ -77,7 +86,7 @@ ui <- dashboardPage(
       ),
       tabItem(tabName = "transferencias_municipais",
               source(file = "pages/transferencias_municipais.R", encoding = "UTF-8")[1]),
-      tabItem(tabName = "rastreamento_educacao",
+      tabItem(tabName = "rastreamento_educacao_individual",
               source(file = "pages/rastreamento_educacao.R", encoding = "UTF-8")[1])
     )
   )
