@@ -1,4 +1,4 @@
-source("R/busca_empenhos_no_bd.R")
+source("R/busca_pagamentos_no_bd.R",encoding = "UTF-8")
 source("R/busca_recursos_no_bd.R")
 
 
@@ -25,6 +25,7 @@ df_recursos <- recursos %>%
   summarise(total = sum(valor_transferido))%>%
   mutate(categoria = "Repasse Federal",
   )
+
 
 df_empenhos <- empenhos %>%
   filter(tipo_repasse == "FUNDEB" ) %>%

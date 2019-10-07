@@ -142,5 +142,22 @@ fluidRow(
       )
     ),
     width = 12
+  ),
+  box(
+    title = "Programa ",
+    collapsible=TRUE,
+    tabsetPanel(
+      type = "tabs",
+      tabPanel(
+        title = "Gráfico",
+        plotly::plotlyOutput("grafico_programa_municipio")
+      ),
+      tabPanel(
+        title = "Dados"
+        #,DT::dataTableOutput("")
+      )
+    ),
+    width = 12
   )
+  
 )

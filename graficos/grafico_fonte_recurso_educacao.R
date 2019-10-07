@@ -1,14 +1,21 @@
 output$grafico_fonte_recurso_educacao <- renderPlotly({
   
-  #categorizando empenhos
-  empenhos$tipo_repasse [grepl(x = empenhos$fonte_recurso, pattern = "FUNDEB") == TRUE] <- "FUNDEB"
-  empenhos$tipo_repasse [grepl(x = empenhos$fonte_recurso, pattern = "PNAE") == TRUE] <- "PNAE"
-  empenhos$tipo_repasse [grepl(x = empenhos$fonte_recurso, pattern = "FNDE") ==  TRUE] <- "FNDE"
-  empenhos$tipo_repasse [grepl(x = empenhos$fonte_recurso, pattern = "PDDE") == TRUE] <- "PDDE"
-  empenhos$tipo_repasse [grepl(x = empenhos$fonte_recurso, pattern = "PNATE") == TRUE] <- "PNATE"
-  empenhos$vl_Empenho <- as.numeric(gsub(",", ".", gsub("\\.", "", empenhos$vl_Empenho)))
+  #categorizando pagamentos por fonte de recurso
+  pagamentos_educacao$tipo_repasse [grepl(x = pagamentos_educacao$FONTE_DO_RECURSO, pattern = "FUNDEB") == TRUE] <- "FUNDEB"
+  pagamentos_educacao$tipo_repasse [grepl(x = pagamentos_educacao$FONTE_DO_RECURSO, pattern = "PNAE") == TRUE] <- "PNAE"
+  pagamentos_educacao$tipo_repasse [grepl(x = pagamentos_educacao$FONTE_DO_RECURSO, pattern = "FNDE") ==  TRUE] <- "FNDE"
+  pagamentos_educacao$tipo_repasse [grepl(x = pagamentos_educacao$FONTE_DO_RECURSO, pattern = "PDDE") == TRUE] <- "PDDE"
+  pagamentos_educacao$tipo_repasse [grepl(x = pagamentos_educacao$FONTE_DO_RECURSO, pattern = "PNATE") == TRUE] <- "PNATE"
+  #convertendo data
+  pagamentos_educacao$DATA_DO_PAGAMENTO <- as.Date(pagamentos_educacao$DATA_DO_PAGAMENTO)
+  pagamentos_educacao$DATA_DO_PAGAMENTO <- ymd(pagamentos_educacao$DATA_DO_PAGAMENTO)
+  pagamentos_educacao$DATA_DO_PAGAMENTO <- as.Date(format(ymd(pagamentos_educacao$DATA_DO_PAGAMENTO),"%m-%Y"))
+  #convertendo valor
+  pagamentos_educacao$PAGO <- as.numeric(gsub(",", ".", gsub("\\.", "", pagamentos_educacao$PAGO)))
+  #separando categorias
+  categorias <- unique(pagamentos_educacao$categoria)
   
-  tabela <- empenhos%>%
+  tabela <- pagamentos%>%
     filter()%>%
     group_by(tipo_repasse,ano_emissao)%>%
     summarise(total = sum(vl_Empenho))

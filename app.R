@@ -505,6 +505,13 @@ server <- function(input, output, session){
     source("graficos/treemap_tipo_transf_municipio.R",local = TRUE,encoding = "UTF-8")
     })
   
+  # Output: grafico com os valores de total por programa
+  output$grafico_programa_municipio <- renderPlot({
+
+    source("graficos/grafico_programa_municipio.R",local = TRUE,encoding = "UTF-8")
+  })
+  
+  
   # ============================================================================
   
   # Rastremanto Munícipio - Educação

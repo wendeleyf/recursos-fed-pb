@@ -1,7 +1,61 @@
-source("R/busca_empenhos_no_bd.R")
+source("R/busca_recursos_no_bd.R")
 source("R/busca_pagamentos_no_bd.R")
-library(circlepackeR)
 
+
+transferencias_educacao <-
+  recursos %>% filter(nome_funcao == "Educação",nome_municipio == "JOAO PESSOA")
+
+
+
+
+pagamentos_educacao <- 
+  pagamentos %>% filter(MUNICIPIO == "João Pessoa")
+
+#categorizando transferencias por fonte de recurso
+pagamentos_educacao$categoria [grepl(x = pagamentos_educacao$FONTE_DO_RECURSO, pattern = "FUNDEB") == TRUE] <- "FUNDEB"
+pagamentos_educacao$categoria [grepl(x = pagamentos_educacao$FONTE_DO_RECURSO, pattern = "PNAE") == TRUE] <- "PNAE"
+pagamentos_educacao$categoria [grepl(x = pagamentos_educacao$FONTE_DO_RECURSO, pattern = "FNDE") ==  TRUE] <- "FNDE"
+pagamentos_educacao$categoria [grepl(x = pagamentos_educacao$FONTE_DO_RECURSO, pattern = "PDDE") == TRUE] <- "PDDE"
+pagamentos_educacao$categoria [grepl(x = pagamentos_educacao$FONTE_DO_RECURSO, pattern = "PNATE") == TRUE] <- "PNATE"
+
+pagamentos_educacao$DATA_DO_PAGAMENTO <- as.Date(pagamentos_educacao$DATA_DO_PAGAMENTO)
+pagamentos_educacao$DATA_DO_PAGAMENTO <- ymd(pagamentos_educacao$DATA_DO_PAGAMENTO)
+pagamentos_educacao$DATA_DO_PAGAMENTO <- as.Date(format(ymd(pagamentos_educacao$DATA_DO_PAGAMENTO),"%m-%Y"))
+
+
+pagamentos_educacao$PAGO <- as.numeric(gsub(",", ".", gsub("\\.", "", pagamentos_educacao$PAGO)))
+
+categorias <- unique(pagamentos_educacao$categoria)
+
+pagamentos_educacao <- pagamentos_educacao%>%
+  filter(categoria %in% categorias)%>%
+  group_by(categoria,DATA_DO_PAGAMENTO)%>%
+  summarise(total = sum(PAGO))
+
+p1 <- plot_ly(pagamentos_educacao,
+              y = ~,
+              x = ~data,
+              type = 'scatterter',
+              name = ~categoria,
+              text = ~paste("",categoria,
+                            "<br>Ano :",data,'<br>Total:R$',formatar(total)),
+              hoverinfo = 'text')%>%
+  layout(title = "FUNDEB",
+         yaxis = list(title = "",
+                      showticklabels = FALSE,
+                      type = "log"),
+         xaxis = list(title = ~categoria),
+         barmode = 'group')%>%config(displaylogo = FALSE)
+
+
+
+
+p1
+
+
+
+
+#------
 empenhos$vl_Empenho <- formatar(empenhos$vl_Empenho)
  # as.numeric(gsub(",", ".", gsub("\\.", "", empenhos$vl_Empenho)))
 
@@ -84,7 +138,7 @@ p1
 
 #------
 #gasto por sub funçao
-
+#-----
 teste <- empenhos%>%
   group_by(tipo_repasse,ano_emissao)%>%
   summarise(total = sum(vl_Empenho))
