@@ -1,6 +1,6 @@
 source("R/utils.R")
 source("R/busca_recursos_no_bd.R")
-#source("R/busca_empenhos_no_bd.R", encoding = "UTF-8")
+source("R/busca_pagamentos_no_bd.R", encoding = "UTF-8")
 source("mapas/mapa_total_transferencia_municipios.R")
 
 #source("R/processar_graficos.R")

@@ -23,6 +23,7 @@
    library(leaflet)
    library(lubridate)
    library(viridis)
+   library(stringi)  
     
 ## -------------------------------------------
 ##
@@ -67,3 +68,7 @@ formata_moeda <- function(valores) {
   str_c("R$ ", preform)
   
 }
+
+#remover acetuaçao
+
+rm_acento <- function(x) toupper(iconv(x, from = "UTF-8", to="ASCII//TRANSLIT"))
