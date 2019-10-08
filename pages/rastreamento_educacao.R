@@ -28,7 +28,7 @@ fluidRow(
     width = 12
   ),
   box(
-    title = "Fonte do Recurso ",
+    title = "Programas ",
     collapsible=TRUE,
     tabsetPanel(
       type = "tabs",

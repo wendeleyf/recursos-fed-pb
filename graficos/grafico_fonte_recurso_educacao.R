@@ -27,7 +27,7 @@ output$grafico_fonte_recurso_educacao <- renderPlotly({
     # ggtitle("Programas") +
     facet_wrap( ~ data) +  
     xlab("") +
-    ylab(list(scientific = FALSE, big.mark = ".", decimal.mark = ","))
+    ylab("")
   ggplotly(p,tooltip = "text" )
 
  

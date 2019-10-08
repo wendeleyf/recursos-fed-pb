@@ -530,6 +530,9 @@ server <- function(input, output, session){
   
   # Rastreamento Município - Educação Geral
   
+  
+  
+  
   output$mapa_total_educacao_geral <- renderLeaflet({
     funcao <- "Educação"
     gerar_mapa_total_educacao(funcao)
@@ -591,6 +594,18 @@ server <- function(input, output, session){
   output$grafico_fonte_recurso_educacao <- renderPlotly({
     source("graficos/grafico_fonte_recurso_educacao.R", local = TRUE, encoding = "UTF-8")
     
+  })
+  
+  # Output: 
+  output$grafico_fonte_recurso_educacao_geral <- renderPlotly({
+    source("graficos/grafico_fonte_recurso_educacao_geral.R", local = TRUE, encoding = "UTF-8")
+    
+  })
+  
+  # Output: treemap com os valores de total por tipo municipio
+  output$fornecedores_educacao <- renderPlot({
+    
+    source("graficos/fornecedores_educacao.R",local = TRUE,encoding = "UTF-8")
   })
   
 }

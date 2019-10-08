@@ -32,7 +32,8 @@ fluidRow(
     tabsetPanel(
       type = "tabs",
       tabPanel(
-        title = "Gráfico"
+        title = "Gráfico",
+        plotOutput("fornecedores_educacao")
       ),
       tabPanel(
         title = "Dados",
@@ -40,20 +41,20 @@ fluidRow(
       )
     ),
     width = 12
+  ),
+  box(
+    title = "Programas ",
+    collapsible=TRUE,
+    tabsetPanel(
+      type = "tabs",
+      tabPanel(
+        title = "Gráfico",
+        plotly::plotlyOutput("grafico_fonte_recurso_educacao_geral")
+      ),
+      tabPanel(
+        title = "Dados"
+      )
+    ),
+    width = 12
   )
-  # box(
-  #   title = "Fonte do Recurso ",
-  #   collapsible=TRUE,
-  #   tabsetPanel(
-  #     type = "tabs",
-  #     tabPanel(
-  #       title = "Gráfico",
-  #       plotly::plotlyOutput("grafico_fonte_recurso_educacao")
-  #     ),
-  #     tabPanel(
-  #       title = "Dados"
-  #     )
-  #   ),
-  #   width = 12
-  # )
     )
