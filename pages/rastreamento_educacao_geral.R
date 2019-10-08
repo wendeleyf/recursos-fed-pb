@@ -28,14 +28,15 @@ fluidRow(
     width = 12
   ),
   box(
-    title = "Top 10 Fornecedores",
+    title = "Top 20 Fornecedores",
     tabsetPanel(
       type = "tabs",
       tabPanel(
         title = "Gráfico"
       ),
       tabPanel(
-        title = "Dados"
+        title = "Dados",
+        DT::dataTableOutput("tabela_top20_fornecedores")
       )
     ),
     width = 12

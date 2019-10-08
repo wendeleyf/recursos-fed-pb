@@ -1,5 +1,6 @@
 source("R/utils.R")
 source("R/busca_recursos_no_bd.R")
+source("R/busca_fornecedores_no_bd.R")
 #source("R/busca_empenhos_no_bd.R", encoding = "UTF-8")
 source("mapas/mapa_total_transferencia_municipios.R")
 source("mapas/mapa_total_educacao_geral.R")
@@ -533,6 +534,29 @@ server <- function(input, output, session){
     gerar_mapa_total_educacao(funcao)
   })
   
+  output$tabela_top20_fornecedores <- DT::renderDataTable({
+    
+    tabela <- buscar_top_20_fornecedores()
+    nomes <- colnames(tabela)
+    DT::datatable(
+      data = tabela,
+      class = "compact stripe",
+      extensions = "Responsive",
+      rownames = FALSE,
+      selection = "none",
+      options = list(language = list(url = 'linguagens/Portuguese-Brasil.json'),
+                     paging = FALSE,
+                     searching = FALSE) 
+    ) %>%
+      formatCurrency(
+        columns = "TOTAL_PAGO",
+        currency = "R$",
+        digits = 2,
+        mark = ".",
+        dec.mark = ","
+      )
+    
+  })
   # ============================================================================
   
   # Rastremanto Munícipio - Educação Individual
