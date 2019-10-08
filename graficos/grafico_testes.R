@@ -8,8 +8,7 @@ transferencias_educacao <-
 
 
 
-pagamentos_educacao <- 
-  pagamentos %>% filter(MUNICIPIO == "João Pessoa")
+
 
 #categorizando transferencias por fonte de recurso
 pagamentos_educacao$categoria [grepl(x = pagamentos_educacao$FONTE_DO_RECURSO, pattern = "FUNDEB") == TRUE] <- "FUNDEB"
@@ -19,38 +18,18 @@ pagamentos_educacao$categoria [grepl(x = pagamentos_educacao$FONTE_DO_RECURSO, p
 pagamentos_educacao$categoria [grepl(x = pagamentos_educacao$FONTE_DO_RECURSO, pattern = "PNATE") == TRUE] <- "PNATE"
 
 pagamentos_educacao$DATA_DO_PAGAMENTO <- as.Date(pagamentos_educacao$DATA_DO_PAGAMENTO)
-pagamentos_educacao$DATA_DO_PAGAMENTO <- ymd(pagamentos_educacao$DATA_DO_PAGAMENTO)
-pagamentos_educacao$DATA_DO_PAGAMENTO <- as.Date(format(ymd(pagamentos_educacao$DATA_DO_PAGAMENTO),"%m-%Y"))
+pagamentos_educacao$DATA_DO_PAGAMENTO <- ymd_hms(pagamentos_educacao$DATA_DO_PAGAMENTO)
+pagamentos_educacao$DATA_DO_PAGAMENTO <- format(ymd(pagamentos_educacao$DATA_DO_PAGAMENTO),"%m-%Y")
 
 
-pagamentos_educacao$PAGO <- as.numeric(gsub(",", ".", gsub("\\.", "", pagamentos_educacao$PAGO)))
+pagamentos_educacao$PAGO <- as.numeric(pagamentos_educacao$PAGO)
 
 categorias <- unique(pagamentos_educacao$categoria)
 
 pagamentos_educacao <- pagamentos_educacao%>%
   filter(categoria %in% categorias)%>%
-  group_by(categoria,DATA_DO_PAGAMENTO)%>%
+  group_by(categoria,data =year(DATA_DO_PAGAMENTO))%>%
   summarise(total = sum(PAGO))
-
-p1 <- plot_ly(pagamentos_educacao,
-              y = ~,
-              x = ~data,
-              type = 'scatterter',
-              name = ~categoria,
-              text = ~paste("",categoria,
-                            "<br>Ano :",data,'<br>Total:R$',formatar(total)),
-              hoverinfo = 'text')%>%
-  layout(title = "FUNDEB",
-         yaxis = list(title = "",
-                      showticklabels = FALSE,
-                      type = "log"),
-         xaxis = list(title = ~categoria),
-         barmode = 'group')%>%config(displaylogo = FALSE)
-
-
-
-
-p1
 
 
 
