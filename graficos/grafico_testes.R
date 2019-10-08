@@ -135,5 +135,5 @@ p <- ggplot(teste, aes(fill=tipo_repasse, y=log10(total), x=tipo_repasse)) +
 
   
 
-p%>%style( hoverinfo = "none")%>%ggplotly()
+p%>%style( hoverinfo = "text")%>%ggplotly()
 
