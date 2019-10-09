@@ -19,7 +19,8 @@ fluidRow(
     tabsetPanel(
       type = "tabs",
       tabPanel(
-        title = "Gráfico"
+        title = "Gráfico",
+        plotly::plotlyOutput("grafico_aplicado_educacao_geral")
       ),
       tabPanel(
         title = "Dados"

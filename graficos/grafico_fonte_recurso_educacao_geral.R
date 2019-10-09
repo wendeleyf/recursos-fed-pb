@@ -17,12 +17,13 @@ output$grafico_fonte_recurso_educacao_geral <- renderPlotly({
   dataset <- merge(educacao_pagamentos,educacao_repasses,all=T )
   p <- ggplot(dataset,
               aes(fill = categoria,
-                  y = log2(total),
+                  y = total,
                   x = programa,
                   text =paste("Programa :",programa,
                               "<br>Descrição",categoria,
                               "<br>Ano :",data,
                               '<br>Total:R$',formatar(total)))) +
+    scale_y_continuous(trans='log10')+
     
     geom_bar(position = "dodge", stat = "identity")  +
     # ggtitle("Programas") +

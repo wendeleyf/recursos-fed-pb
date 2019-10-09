@@ -561,6 +561,25 @@ server <- function(input, output, session){
       )
     
   })
+  
+  # Output: 
+  output$grafico_aplicado_educacao_geral <- renderPlotly({
+    source("graficos/grafico_aplicado_educacao_geral.R", local = TRUE, encoding = "UTF-8")
+    
+  })
+  
+  # Output: treemap com os maiores fornecedores da educação
+  output$fornecedores_educacao <- renderPlot({
+    
+    source("graficos/fornecedores_educacao.R",local = TRUE,encoding = "UTF-8")
+  })
+  
+  # Output: 
+  output$grafico_fonte_recurso_educacao_geral <- renderPlotly({
+    source("graficos/grafico_fonte_recurso_educacao_geral.R", local = TRUE, encoding = "UTF-8")
+    
+  })
+  
   # ============================================================================
   
   # Rastremanto Munícipio - Educação Individual
@@ -591,22 +610,22 @@ server <- function(input, output, session){
   })
   
   # Output: 
+  output$grafico_aplicado_educacao <- renderPlotly({
+    source("graficos/grafico_aplicado_educacao.R", local = TRUE, encoding = "UTF-8")
+    
+  })
+  
+  # Output: 
   output$grafico_fonte_recurso_educacao <- renderPlotly({
     source("graficos/grafico_fonte_recurso_educacao.R", local = TRUE, encoding = "UTF-8")
     
   })
   
-  # Output: 
-  output$grafico_fonte_recurso_educacao_geral <- renderPlotly({
-    source("graficos/grafico_fonte_recurso_educacao_geral.R", local = TRUE, encoding = "UTF-8")
-    
-  })
   
-  # Output: treemap com os valores de total por tipo municipio
-  output$fornecedores_educacao <- renderPlot({
-    
-    source("graficos/fornecedores_educacao.R",local = TRUE,encoding = "UTF-8")
-  })
+  
+  
+  
+
   
 }
 

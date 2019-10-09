@@ -1,11 +1,11 @@
-output$grafico_aplicado_educacao <- renderPlotly({
+output$grafico_aplicado_educacao_geral <- renderPlotly({
   
-  df_pagamentos <- pagamentos%>%filter(!is.na(categoria),MUNICIPIO == input$nome_municipio_rastreamento)%>%
+  df_pagamentos <- pagamentos%>%filter(!is.na(categoria))%>%
     group_by(data = year(DATA_DO_PAGAMENTO)) %>%
     summarise(total = sum(PAGO))%>%
     mutate(categoria = "Pagamentos")%>%filter(data > 2016)
   programas <- c("FUNDEB","PDDE","PNATE") 
-  df_recursos <- recursos%>%filter(linguagem_cidada %in% programas,nome_municipio == input$nome_municipio_rastreamento)%>%
+  df_recursos <- recursos%>%filter(linguagem_cidada %in% programas)%>%
     group_by(data = ano) %>%
     summarise(total = sum(valor_transferido)) %>%
     mutate(categoria = "Repasses")
@@ -33,10 +33,7 @@ output$grafico_aplicado_educacao <- renderPlotly({
     )%>%config(displaylogo = FALSE)
   
   p1
-  
+
 })
-
-
-
 
 
