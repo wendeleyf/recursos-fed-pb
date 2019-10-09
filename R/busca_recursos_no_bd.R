@@ -82,7 +82,11 @@ buscar_recursos_por_tipo <- function(){
 #   lista_funcao
 # }
 
+buscar_recursos_temporarios <- function(){
+  recursos <- readRDS("data/recursos_temp.rds")
+}
+
 # INÍCIO
-recursos <- buscar_recursos_no_banco_de_dados()
+recursos <- buscar_recursos_temporarios()
  
 
