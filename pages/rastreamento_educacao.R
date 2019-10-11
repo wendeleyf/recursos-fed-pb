@@ -43,5 +43,10 @@ fluidRow(
       )
     ),
     width = 12
+  ),
+  box(
+    title = "Fornecedores",
+    collapsible = TRUE,
+    width = 12
   )
 )
