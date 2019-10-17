@@ -1,0 +1,91 @@
+---
+title: "Tratamento de Dados do Sistema ASG"
+author: "Wendeley Fernandes"
+date: "11 de outubro de 2019"
+output:
+  html_document:
+    df_print: paged
+---
+
+```{r setup, include=FALSE}
+library(knitr)
+library(dplyr)
+knitr::opts_chunk$set(echo = TRUE)
+read_chunk('mapa_total_educacao_geral.R')
+```
+
+## Mapa das transferências totais aos municípios
+
+
+```{r }
+total_recursos <- recursos %>%
+    filter(
+      nome_funcao == "Educação"
+    ) %>%
+    group_by(nome_municipio, ano) %>% 
+    summarise(total_transferido = sum(valor_transferido)) %>%
+    arrange(nome_municipio)
+  # spread(ano, total_transferido)
+  # 
+  # total_recursos <- aggregate(total_recursos$total_transferido, by=list(nome_municipio = total_recursos$nome_municipio), FUN=sum)
+  # # print(rowSums(total_recursos[, -1]))
+  # # total_recursos <- cbind(total_recursos,
+  # #                         total_total = rowSums(total_recursos[, -1]))
+  # 
+  # # total_recursos <- total_recursos[-1, ]
+  # 
+  # municipios <- readRDS("data/municipios_pb.rds")
+  # names(municipios)[names(municipios) == "descricao_clean"] <- "nome_municipio"
+  # 
+  # municipios$nome_municipio[municipios$nome_municipio == "SAO DOMINGOS"] <- "SAO DOMINGOS DE POMBAL"
+  # municipios$nome_municipio[municipios$nome_municipio == "SAO VICENTE DO SERIDO"] <- "SERIDO"
+  # 
+  # 
+  # municipio_total <- left_join(
+  #   municipios,
+  #   total_recursos,
+  #   by = "nome_municipio"
+  # )
+  # 
+  # shp <- st_read("data/geojs-25-mun.json")
+  # names(shp)[names(shp) == "id"] <- "cod_ibge"
+  # 
+  # shp_total_transf <- left_join(
+  #   shp,
+  #   municipio_total,
+  #   by = "cod_ibge"
+  # )
+  # 
+  # shp_total_transf$description <- NULL
+  # shp_total_transf$name <- NULL
+  # shp_total_transf$cod_siafi <- NULL
+  # 
+  # ggplot(shp)
+  # 
+  # map_breaks <- c(0, 50000, 500000, 1000000, 5000000, 10000000, 50000000,100000000,500000000, Inf)
+  # pal_fun <- colorBin("viridis", 
+  #                     domain = shp_total_transf$x, 
+  #                     bins = map_breaks, 
+  #                     pretty = TRUE, 
+  #                     reverse = TRUE)
+  # mapa_popup <- paste0(shp_total_transf$descricao,":",formata_moeda(shp_total_transf$x))
+  # 
+  # labels <- sprintf(
+  #   "<strong>%s</strong><br/>%s",
+  #   shp_total_transf$descricao, formata_moeda(shp_total_transf$x)
+  # ) %>% lapply(htmltools::HTML)
+  # 
+  # leaflet(shp_total_transf) %>%
+  #   setView(
+  #     lng = -36.8561,
+  #     lat = -7.20791,
+  #     zoom = 8
+  #   ) %>%
+  #   addPolygons(
+  #     stroke = TRUE,
+  #     fillColor = ~pal_fun(x),
+  #     fillOpacity = 0.8,
+  #     weight = 1)
+
+```
+

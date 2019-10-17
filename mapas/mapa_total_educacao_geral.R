@@ -43,6 +43,7 @@ gerar_mapa_total_educacao <- function(funcao){
   shp_total_transf$name <- NULL
   shp_total_transf$cod_siafi <- NULL
   
+  
   map_breaks <- c(0, 50000, 500000, 1000000, 5000000, 10000000, 50000000,100000000,500000000, Inf)
   pal_fun <- colorBin("viridis", 
                       domain = shp_total_transf$x, 
@@ -84,7 +85,7 @@ gerar_mapa_total_educacao <- function(funcao){
         style = list("font-weight" = "normal", padding = "3px 8px"),
         textsize = "15px",
         direction = "auto"
-      ) 
+      )
     )%>%
     addLegend(
       pal = pal_fun,
