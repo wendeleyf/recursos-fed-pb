@@ -26,6 +26,7 @@ output$grafico_aplicado_educacao_geral <- renderPlotly({
                 hoverinfo = 'text')%>%
     layout(title = "",
            
+           
            yaxis = list(title = "",
                         showticklabels = FALSE,
                         type = "log"),

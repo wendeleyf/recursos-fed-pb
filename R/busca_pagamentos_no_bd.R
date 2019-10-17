@@ -2,45 +2,41 @@ source("R/utils.R")
 
 
 buscar_pagamentos_sagres <- function(){
-  pagamentos <- readRDS("Z:\\sagres pagamentos/pagamentos_municipios_sagres.rds")%>%
-    filter(FUNCAO == "Educação")
-  pagamentos$X_U_FEFF_NO_DO_EMPENHO <- NULL
-  pagamentos$DATA <- NULL
-  pagamentos$MES_DO_EMPENHO <- NULL
-  pagamentos$HISTORICO <- NULL
-  pagamentos
+  pagamentos <- readRDS("Z:\\sagres pagamentos/pagamentos_municipios_sagres.rds")
+  
+  pagamentos <- pagamentos%>%filter(!grepl("2016",pagamentos$DATA_DO_PAGAMENTO))
+  
+  
   
 
 }
 
-buscar_pagamentos_educacao_sagres <- function(){
+#caminho_arquivo <- "Z:\\sagres pagamentos/pagamentos_municipios_sagres.rds"
 
-  pagamentos_educacao <- readRDS("data/pagamentos_educacao.rds")
-  #categorizando pagamentos por fonte de recurso
-  #FUNDEB
-  pagamentos_educacao$categoria [grepl(x = pagamentos_educacao$FONTE_DO_RECURSO, pattern = "111") == TRUE] <- "FUNDEB"
-  pagamentos_educacao$categoria [grepl(x = pagamentos_educacao$FONTE_DO_RECURSO, pattern = "112") == TRUE] <- "FUNDEB"
-  pagamentos_educacao$categoria [grepl(x = pagamentos_educacao$FONTE_DO_RECURSO, pattern = "113") == TRUE] <- "FUNDEB"
-  pagamentos_educacao$categoria [grepl(x = pagamentos_educacao$FONTE_DO_RECURSO, pattern = "114") == TRUE] <- "FUNDEB"
-  pagamentos_educacao$categoria [grepl(x = pagamentos_educacao$FONTE_DO_RECURSO, pattern = "115") == TRUE] <- "FUNDEB"
-  pagamentos_educacao$categoria [grepl(x = pagamentos_educacao$FONTE_DO_RECURSO, pattern = "116") == TRUE] <- "FUNDEB"
-  pagamentos_educacao$categoria [grepl(x = pagamentos_educacao$FONTE_DO_RECURSO, pattern = "117") == TRUE] <- "FUNDEB"
-  pagamentos_educacao$categoria [grepl(x = pagamentos_educacao$FONTE_DO_RECURSO, pattern = "151") == TRUE] <- "FUNDEB"
-  pagamentos_educacao$categoria [grepl(x = pagamentos_educacao$FONTE_DO_RECURSO, pattern = "152") == TRUE] <- "FUNDEB"
+buscar_pagamentos_educacao_sagres <- function(caminho_arquivo){
+
+  pagamentos_educacao <- readRDS(caminho_arquivo)
+  # Categorizando pagamentos por fonte de recurso
   
-  #FNDE
-  pagamentos_educacao$categoria [grepl(x = pagamentos_educacao$FONTE_DO_RECURSO, pattern = "120") == TRUE] <- "FNDE"
-  pagamentos_educacao$categoria [grepl(x = pagamentos_educacao$FONTE_DO_RECURSO, pattern = "124") == TRUE] <- "FNDE"
- 
-  pagamentos_educacao$categoria [grepl(x = pagamentos_educacao$FONTE_DO_RECURSO, pattern = "121") == TRUE] <- "PDDE"
+  # FUNDEB
+  pagamentos_educacao$categoria [grepl(x = pagamentos_educacao$FONTE_DO_RECURSO, pattern = "FUNDEB") == TRUE] <-"FUNDEB"
+  
+  # PDDE
+  pagamentos_educacao$categoria [grepl(x = pagamentos_educacao$FONTE_DO_RECURSO, pattern = "PDDE") == TRUE] <- "PDDE"
   pagamentos_educacao$categoria [grepl(x = pagamentos_educacao$DESCRICAO, pattern = "PDDE") == TRUE] <- "PDDE"
+  pagamentos_educacao$categoria [grepl(x = pagamentos_educacao$DESCRICAO, pattern = "P.D.D.E") == TRUE] <- "PDDE"
+ 
+  # PNAE
+  pagamentos_educacao$categoria [grepl(x = pagamentos_educacao$FONTE_DO_RECURSO, pattern = "PNAE") == TRUE] <- "PNAE"
+  pagamentos_educacao$categoria [grepl(x = pagamentos_educacao$DESCRICAO, pattern = "PNAE") == TRUE] <- "PNAE"
   
-  pagamentos_educacao$categoria [grepl(x = pagamentos_educacao$FONTE_DO_RECURSO, pattern = "122") == TRUE] <- "PNAE"
-  pagamentos_educacao$categoria [grepl(x = pagamentos_educacao$FONTE_DO_RECURSO, pattern = "123") == TRUE] <- "PNATE"
-  
+  # PNATE
+  pagamentos_educacao$categoria [grepl(x = pagamentos_educacao$FONTE_DO_RECURSO, pattern = "PNATE") == TRUE] <- "PNATE"
+  pagamentos_educacao$categoria [grepl(x = pagamentos_educacao$DESCRICAO, pattern = "PNATE") == TRUE] <- "PNATE"
+  pagamentos_educacao$categoria [grepl(x = pagamentos_educacao$DESCRICAO,pattern = "PENAT")== TRUE] <- "PNATE"
   
 
-
+  
 
   #convertendo data
   pagamentos_educacao$DATA_DO_PAGAMENTO <- as.Date(pagamentos_educacao$DATA_DO_PAGAMENTO)
@@ -51,15 +47,20 @@ buscar_pagamentos_educacao_sagres <- function(){
   #limpando nome dos municipios
   pagamentos_educacao$MUNICIPIO <- rm_acento(pagamentos_educacao$MUNICIPIO)
   
-  pagamentos_educacao
+  pagamentos_categorizado <-
+    pagamentos_educacao %>% filter(!is.na(categoria))
+  
+  #saveRDS(pagamentos_categorizado,"pagamentos_categorizado.rds")
+  
+  
 }
 
+
 #retornar dataset
-pagamentos <- buscar_pagamentos_educacao_sagres()
+pagamentos <- readRDS("data/pagamentos_categorizado.rds")
 
 #salvando RDS
-#saveRDS(pagamentos,"data/pagamentos_educacao.rds")
-
+# saveRDS(pagamentos,"data/pagamentos_educacao.rds")
 
 
 
