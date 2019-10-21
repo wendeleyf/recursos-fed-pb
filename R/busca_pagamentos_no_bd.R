@@ -5,9 +5,6 @@ buscar_pagamentos_sagres <- function(){
   pagamentos <- readRDS("Z:\\sagres pagamentos/pagamentos_municipios_sagres.rds")
   
   pagamentos <- pagamentos%>%filter(!grepl("2016",pagamentos$DATA_DO_PAGAMENTO))
-  
-  
-  
 
 }
 
@@ -34,8 +31,6 @@ buscar_pagamentos_educacao_sagres <- function(caminho_arquivo){
   pagamentos_educacao$categoria [grepl(x = pagamentos_educacao$FONTE_DO_RECURSO, pattern = "PNATE") == TRUE] <- "PNATE"
   pagamentos_educacao$categoria [grepl(x = pagamentos_educacao$DESCRICAO, pattern = "PNATE") == TRUE] <- "PNATE"
   pagamentos_educacao$categoria [grepl(x = pagamentos_educacao$DESCRICAO,pattern = "PENAT")== TRUE] <- "PNATE"
-  
-
   
 
   #convertendo data
