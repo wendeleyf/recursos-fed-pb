@@ -74,3 +74,5 @@ buscar_fornecedores_unicos_educacao <- function(){
     by = "CPF_CNPJ"
   )
 }
+
+
