@@ -16,22 +16,31 @@ output$grafico_fonte_recurso_educacao_geral <- renderPlotly({
   
   dataset <- merge(educacao_pagamentos,educacao_repasses,all=T )
   p <- ggplot(dataset,
-              aes(fill = categoria,
-                  y = total,
-                  x = programa,
-                  text =paste("Programa :",programa,
-                              "<br>Descrição",categoria,
-                              "<br>Ano :",data,
-                              '<br>Total:R$',formatar(total)))) +
-    scale_y_continuous(trans='log10')+
-    
+              aes(
+                fill = categoria,
+                y = total,
+                x = programa,
+                text = paste(
+                  "Programa :",
+                  programa,
+                  "<br>Descrição",
+                  categoria,
+                  "<br>Ano :",
+                  data,
+                  '<br>Total:R$',
+                  formatar(total)
+                )
+              )) +
     geom_bar(position = "dodge", stat = "identity")  +
-    # ggtitle("Programas") +
-    facet_wrap( ~ data) +  
+    theme(legend.title = element_blank()) +
+    scale_y_continuous(labels = scales::format_format(
+      big.mark = ".",
+      decimal.mark = ",",
+      scientific = FALSE
+    )) +
+    facet_wrap( ~ data) +
     xlab("") +
     ylab("")
-  ggplotly(p,tooltip = "text" )
+  ggplotly(p, tooltip = "text")
   
-  
-  
-})
+  })

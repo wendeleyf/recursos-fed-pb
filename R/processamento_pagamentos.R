@@ -15,8 +15,8 @@ top_10_fornecedores$PAGO <- as.numeric(top_10_fornecedores$PAGO)
 
 top_10_fornecedores <- top_10_fornecedores %>%
   group_by(CPF_CNPJ) %>%
-  summarise(TOTAL_PAGO = sum(PAGO)) %>%
-  arrange(desc(TOTAL_PAGO))
+  summarise(TOTAL_PAGO = sum(PAGO),Contagem = length(unique(MUNICIPIO)))
+  
 
 contados <- top_10_fornecedores %>% 
   group_by(CPF_CNPJ) %>%
