@@ -34,8 +34,9 @@ buscar_fornecedores <- function(){
     by = "CPF_CNPJ"
   )
   
-  AGREGADO
+  AGREGADO <- AGREGADO %>%
+    arrange(desc(MUNICIPIO))
   
 }
 
-
+fornecedores <- buscar_fornecedores()
