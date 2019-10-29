@@ -103,8 +103,6 @@ juntar_arquivos_idepb <- function(idepb_2017, idepb_2018){
   
   idepb
 }
-
-# Inserindo os dados do idepb no banco de dados
 inserir_idepb_no_banco_de_dados <- function(idepb){
   conexao <- conectar_postgre_sql()
   dbWriteTable(conexao, "avaliacao_idepb", idepb, row.names = FALSE, overwrite = TRUE)
@@ -119,4 +117,5 @@ idepb_2018 <- processar_idepb_2018("data/idepb-2018.csv")
 # Juntando os arquivos em um só
 idepb <- juntar_arquivos_idepb(idepb_2017, idepb_2018)
 
+# Inserindo os dados do idepb no banco de dados
 inserir_idepb_no_banco_de_dados(idepb)
