@@ -10,7 +10,7 @@ source("mapas/mapa_total_educacao_geral.R")
 
 ui <- dashboardPage(
   dashboardHeader(
-    title = "RECURSOS-PB",
+    title = "ASG",
     titleWidth = 250
   ),
   

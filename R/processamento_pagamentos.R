@@ -1,6 +1,5 @@
 library(data.table)
 library(dplyr)
-library(data.table)
 
 pagamentos <- readRDS("data/pagamentos_educacao.rds")
 grupos_despesa <- c("Outras Despesas Correntes", "Investimentos", "Inversões Financeiras")
@@ -48,3 +47,30 @@ top20 <- top20[-c(6,10,12,13), ]
 top20 <- top20[-c(9),]
 top20 <- head(top20, 20)
 saveRDS(top20, "data/top20_fornecedores.rds")
+
+buscar_fornecedores_unicos_educacao <- function(){
+  caminho_pagamentos_rds <- "data/pagamentos_educacao.rds"
+  pagamentos_educacao <- readRDS(caminho_pagamentos_rds)
+  grupos_despesa <- c("Outras Despesas Correntes", "Investimentos", "Inversões Financeiras")
+  
+  pagamentos_filtrados_despesa <- pagamentos_educacao %>%
+    filter(GRUPO_DE_NATUREZA_DE_DESPESA %in% grupos_despesa)
+  
+  pagamentos_filtrados_despesa <- pagamentos_filtrados_despesa %>%
+    select(CPF_CNPJ,FORNECEDOR, MUNICIPIO, PAGO)
+  
+  fornecedores <- pagamentos_filtrados_despesa %>%
+    distinct(CPF_CNPJ, FORNECEDOR)
+  
+  fornecedores <- fornecedores[!duplicated(fornecedores$CPF_CNPJ), ]
+  
+  pagamentos_filtrados_despesa <- pagamentos_filtrados_despesa %>%
+    group_by(CPF_CNPJ) %>%
+    summarise(TOTAL_PAGO = sum(PAGO), Contagem = length(unique(MUNICIPIO)))
+  
+  pagamentos_fornecedores <- left_join(
+    fornecedores,
+    pagamentos_filtrados_despesa,
+    by = "CPF_CNPJ"
+  )
+}
