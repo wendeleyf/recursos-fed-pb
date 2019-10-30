@@ -44,7 +44,7 @@ categorizar_fornecedores <- function(fornecedores){
   fornecedores$FORNECEDOR <- toupper(fornecedores$FORNECEDOR)
   fornecedores$TIPO <- "Fornecedor Comum"
   prestadores_publicos <-
-    "BANCO|INSS|TESOURO|UNDIME|CAGEPA|ENERGISA|TELEMAR|MINISTÉRIO|SECRETARIA|SENAT|INSTITUTO"
+    "BANCO|DETRAN|FUNDO|INSS|TESOURO|UNDIME|CAGEPA|ENERGISA|TELEMAR|MINISTÉRIO|SECRETARIA|SENAT|INSTITUTO"
   fornecedores$TIPO[grepl(paste(prestadores_publicos, collapse = "|"),
                           fornecedores$FORNECEDOR) == TRUE] <- "Prestador Público"
   fornecedores
