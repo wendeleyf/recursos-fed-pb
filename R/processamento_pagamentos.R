@@ -39,4 +39,17 @@ buscar_fornecedores <- function(){
   
 }
 
-fornecedores <- buscar_fornecedores()
+categorizar_fornecedores <- function(fornecedores){
+  fornecedores <- buscar_fornecedores()
+  fornecedores$FORNECEDOR <- toupper(fornecedores$FORNECEDOR)
+  fornecedores$TIPO <- "Fornecedor Comum"
+  prestadores_publicos <-
+    "BANCO|INSS|TESOURO|UNDIME|CAGEPA|ENERGISA|TELEMAR|MINISTÉRIO|SECRETARIA|SENAT|INSTITUTO"
+  fornecedores$TIPO[grepl(paste(prestadores_publicos, collapse = "|"),
+                          fornecedores$FORNECEDOR) == TRUE] <- "Prestador Público"
+  fornecedores
+}
+
+fornecedores <- categorizar_fornecedores(buscar_fornecedores())
+
+
