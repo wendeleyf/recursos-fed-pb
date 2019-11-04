@@ -24,7 +24,8 @@
    library(lubridate)
    library(viridis)
    library(stringi)  
-   library(sf)  
+   library(sf)
+   library(readxl)
 ## -------------------------------------------
 ##
 ## Sumário de Funções
