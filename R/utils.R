@@ -23,8 +23,10 @@
    library(leaflet)
    library(lubridate)
    library(viridis)
-   library(stringi)  
+   library(stringi)
+   library(readxl)
    library(sf)  
+
 ## -------------------------------------------
 ##
 ## Sumário de Funções
