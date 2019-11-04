@@ -23,9 +23,9 @@
    library(leaflet)
    library(lubridate)
    library(viridis)
-   library(stringi)
+   library(stringi)  
+   library(sf)
    library(readxl)
-   library(sf)  
 
 ## -------------------------------------------
 ##
