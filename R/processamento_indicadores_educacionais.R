@@ -12,6 +12,7 @@ processar_rend_escolas <- function(caminho_indicadores_2014){
   processar_rend_escolas_2014 <- function(caminho_rend_escolas_2014){
     rend_escolas_2014 <- read_excel(caminho_rend_escolas_2014, sheet=1, col_names = FALSE)
     colunas <- cbind(rend_escolas_2014[4,1:9 ], rend_escolas_2014[7,10:63])
+    colunas <- gsub("\\º", "", colunas)
     rend_escolas_2014 <- rbind(colunas,rend_escolas_2014[-c(1:9), ])
     rm(colunas)
     rend_escolas_2014 <- rend_escolas_2014[-c(747:752), ]
@@ -21,6 +22,7 @@ processar_rend_escolas <- function(caminho_indicadores_2014){
     # Removendo acento das colunas
     colnames(rend_escolas_2014) <- iconv(colnames(rend_escolas_2014),from = "UTF-8" ,to = "ASCII//TRANSLIT")
     colnames(rend_escolas_2014) <- tolower(colnames(rend_escolas_2014))
+    colnames(rend_escolas_2014) <- gsub("-", "_", colnames(rend_escolas_2014))
     colnames(rend_escolas_2014) <- gsub(" ", "_", colnames(rend_escolas_2014))
     
     # Retornando dataframe tratado
@@ -31,6 +33,7 @@ processar_rend_escolas <- function(caminho_indicadores_2014){
     rend_escolas_2015 <- read_excel(caminho_rend_escolas_2015, sheet=1, col_names = FALSE)
     rend_escolas_2015 <- rend_escolas_2015[,-(34:45)]
     colunas <- cbind(rend_escolas_2015[4,1:9 ], rend_escolas_2015[7,10:63])
+    colunas <- gsub("\\º", "", colunas)
     rend_escolas_2015 <- rbind(colunas,rend_escolas_2015[-c(1:9), ])
     rm(colunas)
     rend_escolas_2015 <- rend_escolas_2015[-c(742:746), ]
@@ -40,6 +43,7 @@ processar_rend_escolas <- function(caminho_indicadores_2014){
     # Removendo acento das colunas
     colnames(rend_escolas_2015) <- iconv(colnames(rend_escolas_2015),from = "UTF-8" ,to = "ASCII//TRANSLIT")
     colnames(rend_escolas_2015) <- tolower(colnames(rend_escolas_2015))
+    colnames(rend_escolas_2015) <- gsub("-", "_", colnames(rend_escolas_2015))
     colnames(rend_escolas_2015) <- gsub(" ", "_", colnames(rend_escolas_2015))
     
     # Retornando dataframe tratado
@@ -50,6 +54,7 @@ processar_rend_escolas <- function(caminho_indicadores_2014){
   processar_rend_escolas_2016 <- function(caminho_rend_escolas_2016){
     rend_escolas_2016 <- read_excel(caminho_rend_escolas_2016, sheet=1, col_names = FALSE)
     colunas <- cbind(rend_escolas_2016[5,1:9 ], rend_escolas_2016[7,10:63])
+    colunas <- gsub("\\º", "", colunas)
     rend_escolas_2016 <- rbind(colunas,rend_escolas_2016[-c(1:8), ])
     rm(colunas)
     rend_escolas_2016 <- rend_escolas_2016[-c(724:725), ]
@@ -59,6 +64,7 @@ processar_rend_escolas <- function(caminho_indicadores_2014){
     # Removendo acento das colunas
     colnames(rend_escolas_2016) <- iconv(colnames(rend_escolas_2016),from = "UTF-8" ,to = "ASCII//TRANSLIT")
     colnames(rend_escolas_2016) <- tolower(colnames(rend_escolas_2016))
+    colnames(rend_escolas_2016) <- gsub("-", "_", colnames(rend_escolas_2016))
     colnames(rend_escolas_2016) <- gsub(" ", "_", colnames(rend_escolas_2016))
     
     # Retornando dataframe tratado
@@ -69,6 +75,7 @@ processar_rend_escolas <- function(caminho_indicadores_2014){
   processar_rend_escolas_2017 <- function(caminho_rend_escolas_2017){
     rend_escolas_2017 <- read_excel(caminho_rend_escolas_2017, sheet=1, col_names = FALSE)
     colunas <- cbind(rend_escolas_2017[5,1:9 ], rend_escolas_2017[7,10:63])
+    colunas <- gsub("\\º", "", colunas)
     rend_escolas_2017 <- rbind(colunas,rend_escolas_2017[-c(1:8), ])
     rm(colunas)
     rend_escolas_2017 <- rend_escolas_2017[-c(646:647), ]
@@ -78,6 +85,7 @@ processar_rend_escolas <- function(caminho_indicadores_2014){
     # Removendo acento das colunas
     colnames(rend_escolas_2017) <- iconv(colnames(rend_escolas_2017),from = "UTF-8" ,to = "ASCII//TRANSLIT")
     colnames(rend_escolas_2017) <- tolower(colnames(rend_escolas_2017))
+    colnames(rend_escolas_2017) <- gsub("-", "_", colnames(rend_escolas_2017))
     colnames(rend_escolas_2017) <- gsub(" ", "_", colnames(rend_escolas_2017))
     
     # Retornando dataframe tratado
@@ -88,6 +96,7 @@ processar_rend_escolas <- function(caminho_indicadores_2014){
   processar_rend_escolas_2018 <- function(caminho_rend_escolas_2018){
     rend_escolas_2018 <- read_excel(caminho_rend_escolas_2018, sheet=1, col_names = FALSE)
     colunas <- cbind(rend_escolas_2018[5,1:9 ], rend_escolas_2018[7,10:63])
+    colunas <- gsub("\\º", "", colunas)
     rend_escolas_2018 <- rbind(colunas,rend_escolas_2018[-c(1:8), ])
     rm(colunas)
     rend_escolas_2018 <- rend_escolas_2018[-c(649:650), ]
@@ -97,6 +106,7 @@ processar_rend_escolas <- function(caminho_indicadores_2014){
     # Removendo acento das colunas
     colnames(rend_escolas_2018) <- iconv(colnames(rend_escolas_2018),from = "UTF-8" ,to = "ASCII//TRANSLIT")
     colnames(rend_escolas_2018) <- tolower(colnames(rend_escolas_2018))
+    colnames(rend_escolas_2018) <- gsub("-", "_", colnames(rend_escolas_2018))
     colnames(rend_escolas_2018) <- gsub(" ", "_", colnames(rend_escolas_2018))
     
     # Retornando dataframe tratado
@@ -114,11 +124,13 @@ processar_rend_escolas <- function(caminho_indicadores_2014){
     colnames(rend_escolas_2015)
   
   rendimento_escolar <- rbind(rend_escolas_2014,rend_escolas_2015,rend_escolas_2016,rend_escolas_2017,rend_escolas_2018)
+  rendimento_escolar$id_rendimento <- seq.int(nrow(rendimento_escolar))
   
+  rendimento_escolar
 
   
 }
-
+# Processamento relação de alunos
 processar_relacao_alunos <- function(){
   
   nomes_colunas <- c("ano", "gre", "municipio", "cod_inep", "entidade", "id_aluno", "nome_aluno")
@@ -157,17 +169,24 @@ processar_relacao_alunos <- function(){
   
   relacao_completa
 }
-
-salvar_relacao_completa_no_bd(relacao_completa){
+# Salvando relação no BD
+salvar_relacao_completa_no_bd <- function(relacao_completa){
   conexao <- conectar_postgre_sql()
   dbWriteTable(conexao, "ie_relacao_alunos", relacao_completa, row.names = FALSE, overwrite = TRUE)
   dbSendQuery(conexao, "ALTER TABLE ie_relacao_alunos ADD PRIMARY KEY(id_relacao)")
   dbDisconnect(conexao)
 }
-
-
+# Salvando rendimento no BD
+salvar_rendimento_no_bd <- function(rendimento_escolar){
+  conexao <- conectar_postgre_sql()
+  dbWriteTable(conexao, "ie_taxa_rendimento", rendimento_escolar, row.names = FALSE, overwrite = TRUE)
+  dbSendQuery(conexao, "ALTER TABLE ie_taxa_rendimento ADD PRIMARY KEY(id_rendimento)")
+  dbDisconnect(conexao)
+}
 
 rendimento_escolar <- processar_rend_escolas()
+# relacao_completa <- processar_relacao_alunos()
 
-
+salvar_relacao_completa_no_bd(relacao_completa)
+salvar_rendimento_no_bd(rendimento_escolar)
 
