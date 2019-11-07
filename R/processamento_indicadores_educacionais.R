@@ -45,3 +45,37 @@ salvar_relacao_completa_no_bd(relacao_completa){
   dbSendQuery(conexao, "ALTER TABLE ie_relacao_alunos ADD PRIMARY KEY(id_relacao)")
   dbDisconnect(conexao)
 }
+
+
+## Infraestrutura
+processar_infraestrutura_escolar <- function(){
+  caminho_arquivo <- "data/b. INFRAESTRUTURA DAS ESCOLAS ESTADUAIS - 2018.xlsx"
+  infraestrutura_escolar <- read_excel(path = caminho_arquivo, sheet = 1)
+  
+  nomes_colunas <- as.character(infraestrutura_escolar[4, ])
+  nomes_colunas
+  
+  infraestrutura_escolar <- infraestrutura_escolar[-c(1:4), ]
+  
+  nomes_
+  nomes_colunas[50] <- "ENERGIA_REDE PÚBLICA"
+  nomes_colunas[51] <- "ENERGIA_GERADOR"
+  nomes_colunas[52] <- "ENERGIA_OUTROS"
+  nomes_colunas[53] <- "ENERGIA_INEXISTENTE"
+  nomes_colunas[54] <- "ÁGUA_REDE PÚBLICA"
+  nomes_colunas[55] <- "ÁGUA_CACIMBA"
+  nomes_colunas[56] <- "ÁGUA_FONTE_OU_RIO"
+  nomes_colunas[57] <- "ÁGUA_POÇO_ARTESIANO"
+  nomes_colunas[58] <- "ÁGUA_FORNECIMENTO_INEXISTENTE"
+  nomes_colunas[60] <- "BANHEIRO DENTRO DO PRÉDIO"
+  nomes_colunas[64] <- "ESGOTO_REDE_PÚBLICA"
+  nomes_colunas[65] <- "ESGOTO_FOSSA"
+  nomes_colunas[66] <- "ESGOTO_INEXISTENTE"
+  nomes_colunas[67] <- "LIXO_COLETA_PERIÓDICA"
+  nomes_colunas[68] <- "LIXO_ENTERRA"
+  nomes_colunas[69] <- "LIXO_QUEIMA"
+  nomes_colunas[70] <- "LIXO_RECICLA"
+  nomes_colunas[71] <- "LIXO_JOGA_EM_OUTRA_ÁREA"
+  nomes_colunas[72] <- "LIXO_OUTROS"
+  
+}
