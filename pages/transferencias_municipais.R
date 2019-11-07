@@ -134,7 +134,7 @@ fluidRow(
       tabPanel(
         
         title = "Gráfico",
-        plotOutput("treemap_tipo_municipio")
+        d3treeR::d3tree2Output("treemap_tipo_municipio")
         
       ),
       tabPanel(

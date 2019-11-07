@@ -514,7 +514,7 @@ server <- function(input, output, session){
   })
   
   # Output: treemap com os valores de total por tipo municipio
-  output$treemap_tipo_municipio <- renderPlot({
+  output$treemap_tipo_municipio <- renderD3tree2({
     
     source("graficos/treemap_tipo_transf_municipio.R",local = TRUE,encoding = "UTF-8")
     })
