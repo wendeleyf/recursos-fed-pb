@@ -26,6 +26,8 @@
    library(stringi)  
    library(sf)
    library(readxl)
+   library(d3treeR)
+   library(treemap)
 
 ## -------------------------------------------
 ##

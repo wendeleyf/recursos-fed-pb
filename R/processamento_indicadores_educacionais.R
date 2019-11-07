@@ -125,6 +125,7 @@ processar_rend_escolas <- function(caminho_indicadores_2014){
   
   rendimento_escolar <- rbind(rend_escolas_2014,rend_escolas_2015,rend_escolas_2016,rend_escolas_2017,rend_escolas_2018)
   rendimento_escolar$id_rendimento <- seq.int(nrow(rendimento_escolar))
+  rendimento_escolar <- rendimento_escolar[,c(64,1:63)]
   
   rendimento_escolar
 
@@ -184,7 +185,7 @@ salvar_rendimento_no_bd <- function(rendimento_escolar){
   dbDisconnect(conexao)
 }
 
-rendimento_escolar <- processar_rend_escolas()
+# rendimento_escolar <- processar_rend_escolas()
 # relacao_completa <- processar_relacao_alunos()
 
 salvar_relacao_completa_no_bd(relacao_completa)
