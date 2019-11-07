@@ -78,17 +78,6 @@ fluidRow(
 
     width = 12
   ),
-  box(
-    title = "Top 10",
-    collapsible = TRUE,
-    tabsetPanel(
-      tabPanel(
-        title = "",
-        DT::dataTableOutput("tabela_top_total_transferido")
-      )
-    ),
-    width = 12
-  ),
   
   box(
     title = "Bottom 10",

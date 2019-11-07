@@ -401,40 +401,6 @@ server <- function(input, output, session){
   }
   )
   
-  # Output: data.frame com os valores dos 10 municípios que mais receberam transferências na Paraíba ---
-  output$tabela_top_total_transferido <- DT::renderDataTable({
-    tabela <- filter_data_municipio()%>%
-      group_by(nome_municipio, ano) %>%
-      summarise(total = sum(valor_transferido))%>%
-    spread(ano, total)
-    tabela[is.na(tabela)] <- 0
-    tabela <- cbind(tabela,
-                            total_total = rowSums(tabela[, -1]))
-    tabela <- tabela %>%
-      arrange(desc(total_total))
-    
-   tabela <- head(tabela, 10)
-   
-   nomes <- colnames(tabela)
-   DT::datatable(
-     data = tabela,
-     class = "compact stripe",
-     extensions = "Responsive",
-     rownames = FALSE,
-     selection = "none",
-     options = list(language = list(url = 'linguagens/Portuguese-Brasil.json'),
-                    paging = FALSE,
-                    searching = FALSE) 
-   ) %>% 
-     formatCurrency(
-       columns = nomes,
-       currency = "R$",
-       digits = 2,
-       mark = ".",
-       dec.mark = ","
-     )
-  })
-  
   # Output: data.frame com os valores dos 10 municípios que menos receberam transferências na Paraíba ---
   output$tabela_bottom_total_transferido <- DT::renderDataTable({
     tabela <- filter_data_municipio()%>%
