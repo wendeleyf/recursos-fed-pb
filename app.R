@@ -506,10 +506,10 @@ server <- function(input, output, session){
   
   output$tabela_top20_fornecedores <- DT::renderDataTable({
     
-    tabela <- buscar_top_20_fornecedores()
+    tabela <- fornecedores%>%filter(TIPO == "Fornecedor Comum")
     nomes <- colnames(tabela)
     DT::datatable(
-      data = tabela,
+      data = tabela[1:20,],
       class = "compact stripe",
       extensions = "Responsive",
       rownames = FALSE,
@@ -519,7 +519,7 @@ server <- function(input, output, session){
                      searching = FALSE) 
     ) %>%
       formatCurrency(
-        columns = "TOTAL_PAGO",
+        columns = "PAGO",
         currency = "R$",
         digits = 2,
         mark = ".",

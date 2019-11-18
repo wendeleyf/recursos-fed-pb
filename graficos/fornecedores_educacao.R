@@ -1,5 +1,5 @@
 output$fornecedores_educacao <- renderPlotly({
-  options(scipen=999)
+ 
   tabela <- fornecedores%>%filter(TIPO == "Fornecedor Comum")
   
   p <- tabela[1:10,] %>%
@@ -8,16 +8,25 @@ output$fornecedores_educacao <- renderPlotly({
                fill = PAGO,
                text = paste("FORNECEDOR :",
                             FORNECEDOR,
-                            "<br>Nº DE MUNICÍPIOS ATUANDO:",
+                            "<br>CPF/CNPJ : ",
+                            CPF_CNPJ,
+                            "<br>Nº DE MUNICÍPIOS ATUANDO : ",
                             MUNICIPIO,
-                            '<br>VALOR PAGO:R$',
-                            PAGO))) +
+                            '<br>VALOR PAGO: R$',
+                            formatar(PAGO)))) +
     geom_bar(position = "dodge", stat = "identity") +
-    scale_fill_viridis(direction = -1,begin = 0, end = .79)  +
+    scale_fill_viridis(direction = -1,
+                       begin = 0,
+                       end = .79,
+                       labels = scales::format_format(
+                         big.mark = ".",
+                         decimal.mark = ",",
+                         scientific = FALSE))  +
     coord_flip() +
     labs(x= "",
-         y = "Nº DE MUNICÍPIOS ATUANDO")+
-    theme(legend.title = element_blank())
+         y = "Nº DE MUNICÍPIOS ATUANDO",
+         fill = "VALOR PAGO EM R$"
+         )
   
   
   
