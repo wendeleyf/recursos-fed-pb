@@ -34,7 +34,7 @@ fluidRow(
       type = "tabs",
       tabPanel(
         title = "Gráfico",
-        plotOutput("fornecedores_educacao")
+        plotly::plotlyOutput("fornecedores_educacao")
       ),
       tabPanel(
         title = "Dados",

@@ -1,5 +1,6 @@
 library(data.table)
 library(dplyr)
+source("R/utils.R")
 
 buscar_fornecedores <- function(){
   
@@ -41,10 +42,11 @@ buscar_fornecedores <- function(){
 
 categorizar_fornecedores <- function(fornecedores){
   fornecedores <- buscar_fornecedores()
-  fornecedores$FORNECEDOR <- toupper(fornecedores$FORNECEDOR)
+  fornecedores$FORNECEDOR <- str_trim(toupper(fornecedores$FORNECEDOR))
+  
   fornecedores$TIPO <- "Fornecedor Comum"
   prestadores_publicos <-
-    "BANCO|DETRAN|FUNDO|INSS|TESOURO|UNDIME|CAGEPA|ENERGISA|TELEMAR|MINISTÉRIO|SECRETARIA|SENAT|INSTITUTO"
+    "BANCO|CONSELHO|DETRAN|FUNDO|INSS|TESOURO|UNDIME|CAGEPA|ENERGISA|TELEMAR|MINISTÉRIO|SECRETARIA|SENAT|INSTITUTO"
   fornecedores$TIPO[grepl(paste(prestadores_publicos, collapse = "|"),
                           fornecedores$FORNECEDOR) == TRUE] <- "Prestador Público"
   fornecedores

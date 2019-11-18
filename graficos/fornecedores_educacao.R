@@ -1,24 +1,37 @@
-output$fornecedores_educacao <- renderPlot({
+output$fornecedores_educacao <- renderPlotly({
+  options(scipen=999)
+  tabela <- fornecedores%>%filter(TIPO == "Fornecedor Comum")
   
-  tabela <- buscar_top_20_fornecedores()
+  p <- tabela[1:10,] %>%
+    ggplot(aes(reorder(FORNECEDOR, MUNICIPIO),
+               MUNICIPIO,
+               fill = PAGO,
+               text = paste("FORNECEDOR :",
+                            FORNECEDOR,
+                            "<br>Nº DE MUNICÍPIOS ATUANDO:",
+                            MUNICIPIO,
+                            '<br>VALOR PAGO:R$',
+                            PAGO))) +
+    geom_bar(position = "dodge", stat = "identity") +
+    scale_fill_viridis(direction = -1,begin = 0, end = .79)  +
+    coord_flip() +
+    labs(x= "",
+         y = "Nº DE MUNICÍPIOS ATUANDO")+
+    theme(legend.title = element_blank())
   
-  color_pal = viridis::viridis_pal(direction = -1,option = "D")(20)
-  p <- treemap::treemap(tabela, 
-                        index=c("FORNECEDOR"),
-                        vSize="TOTAL_PAGO", 
-                        vColor="TOTAL_PAGO",
-                        type="value",
-                        title = "",
-                        palette=color_pal,
-                        fun.aggregate = "sum",
-                        border.col ="white",
-                        position.legend="bottom",
-                        fontsize.labels = 16,
-                        title.legend="",
-                        format.legend = list(scientific = FALSE, big.mark = ".", decimal.mark = ",")
-                        
-                        
-                        
-  )
+  
+  
+  # Adicionando as legendas 
+  ggplotly(p,tooltip = "text")%>%
+  style(hoverlabel = list(bgcolor = "white",
+                            bordercolor = "#77777",
+                            font = list(color  = '#77777'),
+                            align = "forget",  
+                            orientation = "v"  ))
   
 })
+
+
+
+
+

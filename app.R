@@ -1,6 +1,6 @@
 source("R/utils.R")
 source("R/busca_recursos_no_bd.R")
-source("R/busca_fornecedores_no_bd.R")
+source("R/processamento_pagamentos.R")
 #source("R/busca_empenhos_no_bd.R", encoding = "UTF-8")
 source("R/busca_pagamentos_no_bd.R", encoding = "UTF-8")
 source("mapas/mapa_total_transferencia_municipios.R")
@@ -535,7 +535,7 @@ server <- function(input, output, session){
   })
   
   # Output: treemap com os maiores fornecedores da educação
-  output$fornecedores_educacao <- renderPlot({
+  output$fornecedores_educacao <- renderPlotly({
     
     source("graficos/fornecedores_educacao.R",local = TRUE,encoding = "UTF-8")
   })
