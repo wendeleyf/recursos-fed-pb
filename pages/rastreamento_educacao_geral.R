@@ -10,6 +10,17 @@ fluidRow(
     width = 12
     ),
   box(
+    title = "Ano(s)",
+    sliderInput(
+      inputId = "ano_rastreamento_educacao_geral_input",
+      label = "Escolha os anos",
+      min = 2017,
+      max = 2019,
+      value = c(2017,2019)
+    ),
+    width = 12
+  ),
+  box(
     title = "Mapa dos valores transferidos",
     leafletOutput("mapa_total_educacao_geral"),
     width = 12
