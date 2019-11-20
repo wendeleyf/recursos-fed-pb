@@ -1,17 +1,25 @@
 output$fornecedores_educacao <- renderPlotly({
- 
-  tabela <- fornecedores%>%filter(TIPO == "Fornecedor Comum")
   
-  p <- tabela[1:10,] %>%
-    ggplot(aes(reorder(FORNECEDOR, MUNICIPIO),
-               MUNICIPIO,
+  anos <- input$ano_rastreamento_educacao_geral_input[1]:input$ano_rastreamento_educacao_geral_input[2]
+  tabela <- fornecedores%>%filter(TIPO == "Fornecedor Comum")%>%
+    filter(DATA_DO_PAGAMENTO %in% anos)
+  
+  p <- tabela%>%
+    group_by(FORNECEDOR,CPF_CNPJ)%>%
+    summarise(PAGO = sum(PAGO),
+              QTD = n_distinct(MUNICIPIO))%>%
+    arrange(desc(QTD))%>%
+    head(10)%>%
+  
+    ggplot(aes(reorder(FORNECEDOR, QTD),
+               QTD,
                fill = PAGO,
                text = paste("FORNECEDOR :",
                             FORNECEDOR,
                             "<br>CPF/CNPJ : ",
                             CPF_CNPJ,
                             "<br>Nº DE MUNICÍPIOS ATUANDO : ",
-                            MUNICIPIO,
+                            QTD,
                             '<br>VALOR PAGO: R$',
                             formatar(PAGO)))) +
     geom_bar(position = "dodge", stat = "identity") +
@@ -26,7 +34,8 @@ output$fornecedores_educacao <- renderPlotly({
     labs(x= "",
          y = "Nº DE MUNICÍPIOS ATUANDO",
          fill = "VALOR PAGO EM R$"
-         )
+         ) 
+  
   
   
   

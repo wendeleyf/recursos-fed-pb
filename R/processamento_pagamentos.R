@@ -8,40 +8,49 @@ buscar_fornecedores <- function(){
   pagamentos_educacao <- readRDS(caminho_pagamentos_rds)
   grupos_despesa <- c("Outras Despesas Correntes", "Investimentos", "Inversões Financeiras")
   
-  pagamentos_filtrados_despesa <- pagamentos_educacao %>%
+  pagamentos_educacao <- pagamentos_educacao %>%
     filter(GRUPO_DE_NATUREZA_DE_DESPESA %in% grupos_despesa)
   
-  pagamentos_filtrados_despesa <- pagamentos_filtrados_despesa %>%
-    select(CPF_CNPJ,FORNECEDOR, MUNICIPIO, PAGO)
+  pagamentos_educacao <- pagamentos_educacao %>%
+    select(CPF_CNPJ,FORNECEDOR, MUNICIPIO, PAGO,DATA_DO_PAGAMENTO)
+  pagamentos_educacao$DATA_DO_PAGAMENTO <- year(pagamentos_educacao$DATA_DO_PAGAMENTO)
   
-  fornecedores <- pagamentos_filtrados_despesa %>%
+  fornecedores <- pagamentos_educacao %>%
     distinct(CPF_CNPJ, FORNECEDOR)
+  
+  pagamentos_educacao <- pagamentos_educacao %>%
+    select(CPF_CNPJ, MUNICIPIO, PAGO,DATA_DO_PAGAMENTO)
   
   fornecedores <- fornecedores[!duplicated(fornecedores$CPF_CNPJ), ]
   
-  AGREGADO_PAGO <- aggregate(PAGO ~ CPF_CNPJ, pagamentos_filtrados_despesa, sum)
-  AGRREGADO_COUNT_MUNICIPIO <- aggregate(MUNICIPIO ~ CPF_CNPJ, pagamentos_filtrados_despesa, function(x) length(unique(x)))
-  
-  
-  AGREGADO <- left_join(
-    AGREGADO_PAGO,
-    AGRREGADO_COUNT_MUNICIPIO,
+  fornecedores <- left_join(
+    pagamentos_educacao,
+    fornecedores    ,
     by = "CPF_CNPJ"
   )
   
-  AGREGADO <- left_join(
-    fornecedores,
-    AGREGADO    ,
-    by = "CPF_CNPJ"
-  )
-  
-  AGREGADO <- AGREGADO %>%
-    arrange(desc(MUNICIPIO))
+  # AGREGADO_PAGO <- aggregate(PAGO ~ CPF_CNPJ+ DATA_DO_PAGAMENTO, pagamentos_educacao, sum)
+  # AGRREGADO_COUNT_MUNICIPIO <- aggregate(MUNICIPIO ~ CPF_CNPJ + DATA_DO_PAGAMENTO , pagamentos_educacao, function(x) length(unique(x)))
+  # 
+  # 
+  # AGREGADO <- left_join(
+  #   AGREGADO_PAGO,
+  #   AGRREGADO_COUNT_MUNICIPIO,
+  #   by = c("CPF_CNPJ","DATA_DO_PAGAMENTO")
+  # )
+  # 
+  # AGREGADO <- left_join(
+  #   fornecedores,
+  #   AGREGADO    ,
+  #   by = "CPF_CNPJ"
+  # )
+  # 
+  # AGREGADO <- AGREGADO %>%
+  #   arrange(desc(MUNICIPIO))
   
 }
 
 categorizar_fornecedores <- function(fornecedores){
-  fornecedores <- buscar_fornecedores()
   fornecedores$FORNECEDOR <- str_trim(toupper(fornecedores$FORNECEDOR))
   
   fornecedores$TIPO <- "Fornecedor Comum"
