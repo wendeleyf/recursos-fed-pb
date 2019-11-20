@@ -40,7 +40,7 @@ fluidRow(
     width = 12
   ),
   box(
-    title = "Top 20 Fornecedores",
+    title = "Top 10 Fornecedores com maior atuação no estado",
     tabsetPanel(
       type = "tabs",
       tabPanel(
