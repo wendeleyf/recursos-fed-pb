@@ -62,6 +62,11 @@ ui <- dashboardPage(
               tabName = "rastreamento_educacao_individual",
               text = "Visão Individual",
               icon = icon("eye")
+            ),
+            menuSubItem(
+              tabName = "rastreamento_educacao_fornecedores",
+              text = "Visão Fornecedores",
+              icon = icon("eye")
             )
           ),
           menuSubItem(
