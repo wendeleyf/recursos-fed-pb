@@ -52,7 +52,6 @@ buscar_fornecedores <- function(){
 
 categorizar_fornecedores <- function(fornecedores){
   fornecedores$FORNECEDOR <- str_trim(toupper(fornecedores$FORNECEDOR))
-  
   fornecedores$TIPO <- "Fornecedor Comum"
   prestadores_publicos <-
     "BANCO|CONSELHO|DETRAN|FUNDO|INSS|TESOURO|UNDIME|CAGEPA|ENERGISA|TELEMAR|MINISTÉRIO|SECRETARIA|SENAT|INSTITUTO"

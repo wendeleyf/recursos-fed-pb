@@ -40,7 +40,7 @@ fluidRow(
     width = 12
   ),
   box(
-    title = "Top 20 Fornecedores",
+    title = "Top 10 Fornecedores com maior atuação no estado",
     tabsetPanel(
       type = "tabs",
       tabPanel(
@@ -64,7 +64,8 @@ fluidRow(
         plotly::plotlyOutput("grafico_fonte_recurso_educacao_geral")
       ),
       tabPanel(
-        title = "Dados"
+        title = "Dados",
+        DT::dataTableOutput("tabela_programas_educacao_geral")
       )
     ),
     width = 12
