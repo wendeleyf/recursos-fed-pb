@@ -64,7 +64,8 @@ fluidRow(
         plotly::plotlyOutput("grafico_fonte_recurso_educacao_geral")
       ),
       tabPanel(
-        title = "Dados"
+        title = "Dados",
+        DT::dataTableOutput("tabela_programas_educacao_geral")
       )
     ),
     width = 12

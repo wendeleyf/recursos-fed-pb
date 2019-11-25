@@ -509,6 +509,11 @@ server <- function(input, output, session){
     
   })
   
+  output$tabela_programas_educacao_geral <- DT::renderDataTable({
+    source("tabelas/tabela_programas_educacao_geral.R", local = TRUE, encoding = "UTF-8")
+    
+  })
+  
   # Output: 
   output$grafico_aplicado_educacao_geral <- renderPlotly({
     source("graficos/grafico_aplicado_educacao_geral.R", local = TRUE, encoding = "UTF-8")
